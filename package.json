@@ -1,0 +1,39 @@
+{
+  "name": "mytime-tracker",
+  "version": "1.0.0",
+  "description": "Professional time tracking PWA with hierarchical categories",
+  "main": "mytime.html",
+  "scripts": {
+    "serve": "npx serve .",
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'No build process required - single file app'",
+    "test": "echo 'Manual testing in browser'",
+    "deploy": "echo 'Copy files to web server'"
+  },
+  "keywords": [
+    "time-tracking",
+    "productivity",
+    "pwa",
+    "stopwatch",
+    "timer"
+  ],
+  "author": "MyTime Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "pwa": {
+    "name": "MyTime",
+    "short_name": "MyTime",
+    "theme_color": "#667eea",
+    "background_color": "#667eea"
+  },
+  "repository": {
+    "type": "git",
+    "url": "local"
+  },
+  "bugs": {
+    "url": "local"
+  },
+  "homepage": "./mytime.html"
+}

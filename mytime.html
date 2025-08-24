@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTime - Time Tracker v2</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .timer-section {
+            max-width: 500px;
+        }
+
+        .youtube-section {
+            max-width: 500px;
+        }
+
+        .youtube-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .youtube-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .youtube-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .youtube-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .youtube-select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .youtube-select:focus {
+            border-color: #667eea;
+        }
+
+        .youtube-iframe {
+            width: 100%;
+            height: 280px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .timer-section,
+            .youtube-section {
+                max-width: 100%;
+            }
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .timer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 300;
+            font-family: 'Courier New', monospace;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-start:hover:not(:disabled) {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-pause {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-pause:hover:not(:disabled) {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-stop {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-stop:hover:not(:disabled) {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .export-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .export-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .progress-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .category-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            width: 30px;
+        }
+
+        .category-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .config-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+
+
+        .metronome-player {
+            position: fixed;
+            top: 20%;
+            left: calc(50% + 280px);
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            width: 400px;
+        }
+        
+        @media (max-width: 1200px) {
+            .metronome-player {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                max-width: 400px;
+            }
+        }
+
+        .metronome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .metronome-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .close-metronome {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .metronome-iframe {
+            border: none;
+            border-radius: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #ecf0f1;
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .category-btn.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .category-icon-large {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .category-name-large {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .subcategory-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .subcategory-select:focus {
+            border-color: #667eea;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .current-session {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .current-session.active {
+            background: rgba(39, 174, 96, 0.2);
+            border: 2px solid rgba(39, 174, 96, 0.5);
+        }
+
+        .session-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .session-category {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .timer-display {
+                font-size: 3rem;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .btn {
+                min-width: 80px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 15px 10px;
+            }
+            
+            .config-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="config-btn" onclick="window.app.showConfig()" title="Settings">⚙️</button>
+    
+
+    <div class="container">
+        <header class="header">
+            <h1>MyTime</h1>
+            <p>Professional Time Tracking</p>
+        </header>
+        
+        <div class="current-session" id="currentSession">
+            <div class="session-info">No active session</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="timer-section">
+                <div class="timer-card">
+                    <div class="timer-display" id="timer">00:00:00</div>
+                    
+                    <div class="controls">
+                        <button id="startBtn" class="btn btn-start">Start</button>
+                        <button id="pauseBtn" class="btn btn-pause" disabled>Pause</button>
+                        <button id="stopBtn" class="btn btn-stop" disabled>Save</button>
+                        <button id="resetBtn" class="btn btn-reset">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="youtube-section">
+                <div class="youtube-card">
+                    <div class="youtube-header">
+                        <div class="youtube-title">YouTube Player</div>
+                    </div>
+                    <div class="youtube-controls">
+                        <select class="youtube-select" id="youtubeSelect">
+                            <option value="">Select a video</option>
+                            <option value="40">Metronome 40 BPM</option>
+                            <option value="50">Metronome 50 BPM</option>
+                            <option value="60">Metronome 60 BPM</option>
+                            <option value="70">Metronome 70 BPM</option>
+                            <option value="80">Metronome 80 BPM</option>
+                            <option value="100">Metronome 100 BPM</option>
+                            <option value="110">Metronome 110 BPM</option>
+                            <option value="120">Metronome 120 BPM</option>
+                            <option value="130">Metronome 130 BPM</option>
+                            <option value="140">Metronome 140 BPM</option>
+                            <option value="150">Metronome 150 BPM</option>
+                            <option value="160">Metronome 160 BPM</option>
+                            <option value="170">Metronome 170 BPM</option>
+                            <option value="180">Metronome 180 BPM</option>
+                            <option value="190">Metronome 190 BPM</option>
+                            <option value="200">Metronome 200 BPM</option>
+                        </select>
+                        <iframe class="youtube-iframe" id="youtubeIframe" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-card">
+            <div class="progress-header">
+                <span class="progress-title">Today's Progress</span>
+                <button class="export-btn" onclick="window.app.showWeeklyReport()">Weekly Report</button>
+            </div>
+            <div id="progressList"></div>
+        </div>
+    </div>
+
+    <!-- Category Selection Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Category</h2>
+                <p>Choose what you'll be working on</p>
+            </div>
+            
+            <select id="categorySelect" class="subcategory-select">
+                <option value="">Select main category...</option>
+            </select>
+            
+            <select id="subcategorySelect" class="subcategory-select" style="display: none;">
+                <option value="">Select subcategory...</option>
+            </select>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="window.app.closeCategoryModal()">Cancel</button>
+                <button id="confirmCategoryBtn" class="btn btn-primary" disabled onclick="window.app.confirmCategory()">Start Timer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuration Modal -->
+    <div id="configModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Configuration</h2>
+                <p>Manage categories and settings</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Minimum Session Duration (minutes):</label>
+                <input type="number" id="minSessionInput" min="1" max="60" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px;">
+            </div>
+            
+            <div id="categoryConfig"></div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="window.app.closeConfigModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="window.app.saveConfig()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Report Modal -->
+    <div id="weeklyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Weekly Time Report</h2>
+                <p>Last 7 days time breakdown</p>
+            </div>
+            
+            <div id="weeklyReportContent"></div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="window.app.closeWeeklyModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Entry Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Session Details</h2>
+                <p>Add optional details about this session</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Session Details (optional):</label>
+                <textarea id="sessionDetails" rows="4" placeholder="What did you accomplish? Any notes about this session..." style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="window.app.skipDetails()">Skip</button>
+                <button class="btn btn-primary" onclick="window.app.saveWithDetails()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metronome Player -->
+    <div id="metronomePlayer" class="metronome-player">
+        <div class="metronome-header">
+            <span class="metronome-title" id="metronomeTitle">Metronome</span>
+            <button class="close-metronome" onclick="window.app.closeMetronome()">×</button>
+        </div>
+        <iframe id="metronomeIframe" class="metronome-iframe" width="360" height="200" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        class MyTimeApp {
+            constructor() {
+                console.log('MyTimeApp constructor called');
+                this.config = null;
+                this.timer = {
+                    startTime: null,
+                    elapsedTime: 0,
+                    isRunning: false,
+                    isPaused: false,
+                    interval: null
+                };
+                this.currentSession = {
+                    category: null,
+                    subcategory: null
+                };
+                this.selectedCategory = null;
+                
+                console.log('Initializing elements...');
+                this.initElements();
+                console.log('Loading config...');
+                this.loadConfig();
+                console.log('Loading history...');
+                this.loadHistory();
+                console.log('Binding events...');
+                this.bindEvents();
+                console.log('Updating display...');
+                this.updateDisplay();
+                this.updateProgress();
+                console.log('MyTimeApp constructor complete');
+            }
+            
+            initElements() {
+                this.timerDisplay = document.getElementById('timer');
+                this.startBtn = document.getElementById('startBtn');
+                this.pauseBtn = document.getElementById('pauseBtn');
+                this.stopBtn = document.getElementById('stopBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.currentSessionDiv = document.getElementById('currentSession');
+                this.progressList = document.getElementById('progressList');
+                this.categoryModal = document.getElementById('categoryModal');
+                this.configModal = document.getElementById('configModal');
+                this.categorySelect = document.getElementById('categorySelect');
+                this.subcategorySelect = document.getElementById('subcategorySelect');
+                this.confirmCategoryBtn = document.getElementById('confirmCategoryBtn');
+                this.minSessionInput = document.getElementById('minSessionInput');
+                this.categoryConfig = document.getElementById('categoryConfig');
+                this.weeklyModal = document.getElementById('weeklyModal');
+                this.weeklyReportContent = document.getElementById('weeklyReportContent');
+                this.detailModal = document.getElementById('detailModal');
+                this.sessionDetails = document.getElementById('sessionDetails');
+                this.metronomePlayer = document.getElementById('metronomePlayer');
+                this.metronomeIframe = document.getElementById('metronomeIframe');
+                this.metronomeTitle = document.getElementById('metronomeTitle');
+                this.youtubeSelect = document.getElementById('youtubeSelect');
+                this.youtubeIframe = document.getElementById('youtubeIframe');
+            }
+            
+            async loadConfig() {
+                try {
+                    const response = await fetch('config.yaml');
+                    const yamlText = await response.text();
+                    this.config = this.parseYAML(yamlText);
+                } catch (error) {
+                    console.error('Error loading config:', error);
+                    this.config = this.getDefaultConfig();
+                }
+            }
+            
+            parseYAML(yamlText) {
+                const lines = yamlText.split('\n');
+                const result = { app: {}, categories: [] };
+                let currentCategory = null;
+                let inSubcategories = false;
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    if (!line || line.startsWith('#')) continue;
+                    
+                    if (line.startsWith('app:')) {
+                        continue;
+                    } else if (line.startsWith('name:') && !currentCategory) {
+                        result.app.name = line.split(':')[1].trim().replace(/"/g, '');
+                    } else if (line.startsWith('version:') && !currentCategory) {
+                        result.app.version = line.split(':')[1].trim().replace(/"/g, '');
+                    } else if (line.startsWith('minimum_session_minutes:')) {
+                        result.app.minimum_session_minutes = parseInt(line.split(':')[1].trim());
+                    } else if (line.startsWith('categories:')) {
+                        continue;
+                    } else if (line.startsWith('- name:')) {
+                        if (currentCategory) {
+                            result.categories.push(currentCategory);
+                        }
+                        currentCategory = {
+                            name: line.split(':')[1].trim().replace(/"/g, ''),
+                            subcategories: []
+                        };
+                        inSubcategories = false;
+                    } else if (line.startsWith('color:') && currentCategory) {
+                        currentCategory.color = line.split(':')[1].trim().replace(/"/g, '');
+                    } else if (line.startsWith('icon:') && currentCategory) {
+                        currentCategory.icon = line.split(':')[1].trim().replace(/"/g, '');
+                    } else if (line.startsWith('target_minutes:') && currentCategory) {
+                        currentCategory.target_minutes = parseInt(line.split(':')[1].trim());
+                    } else if (line.startsWith('subcategories:')) {
+                        inSubcategories = true;
+                    } else if (line.startsWith('-') && inSubcategories && currentCategory) {
+                        const subcategory = line.substring(1).trim().replace(/"/g, '');
+                        currentCategory.subcategories.push(subcategory);
+                    }
+                }
+                
+                if (currentCategory) {
+                    result.categories.push(currentCategory);
+                }
+                
+                return result;
+            }
+            
+            getDefaultConfig() {
+                return {
+                    app: {
+                        name: "MyTime",
+                        version: "1.0",
+                        minimum_session_minutes: 5
+                    },
+                    categories: [
+                        {
+                            name: "Work",
+                            color: "#3498db",
+                            icon: "💼",
+                            target_minutes: 480,
+                            subcategories: ["Meetings", "Coding", "Documentation", "Planning", "Email"]
+                        },
+                        {
+                            name: "Study",
+                            color: "#e74c3c",
+                            icon: "📚",
+                            target_minutes: 120,
+                            subcategories: ["Reading", "Research", "Practice", "Notes"]
+                        }
+                    ]
+                };
+            }
+            
+            bindEvents() {
+                // Use both onclick and addEventListener for Edge compatibility
+                this.startBtn.onclick = null;
+                const startHandler = (e) => {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    console.log('START BUTTON - isPaused:', this.timer.isPaused, 'hasSession:', !!this.currentSession.category, 'browser:', navigator.userAgent.includes('Edge') ? 'Edge' : 'Other');
+                    
+                    if (this.timer.isPaused === true && this.currentSession && this.currentSession.category) {
+                        console.log('RESUMING TIMER');
+                        this.resumeTimer();
+                    } else {
+                        console.log('SHOWING MODAL');
+                        this.showCategoryModal();
+                    }
+                };
+                
+                this.startBtn.onclick = startHandler;
+                this.startBtn.addEventListener('click', startHandler);
+                
+                this.pauseBtn.onclick = () => this.pause();
+                this.stopBtn.onclick = () => this.stop();
+                this.resetBtn.onclick = () => this.reset();
+                
+                // YouTube player event
+                this.youtubeSelect.addEventListener('change', (e) => {
+                    this.selectYouTubeVideo(e.target.value);
+                });
+                
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+                    
+                    if (e.code === 'Space') {
+                        e.preventDefault();
+                        console.log('SPACE KEY - isRunning:', this.timer.isRunning, 'isPaused:', this.timer.isPaused);
+                        if (this.timer.isRunning) {
+                            this.pause();
+                        } else if (this.timer.isPaused) {
+                            console.log('==> RESUMING VIA SPACE');
+                            this.resumeTimer();
+                        } else {
+                            console.log('==> SHOWING MODAL VIA SPACE');
+                            this.showCategoryModal();
+                        }
+                    }
+                });
+            }
+            
+            showCategoryModal() {
+                console.log('>>> CATEGORY MODAL OPENING <<<');
+                this.renderCategoryDropdown();
+                this.categoryModal.style.display = 'block';
+            }
+            
+            closeCategoryModal() {
+                this.categoryModal.style.display = 'none';
+                this.selectedCategory = null;
+                this.categorySelect.value = '';
+                this.subcategorySelect.style.display = 'none';
+                this.subcategorySelect.value = '';
+                this.confirmCategoryBtn.disabled = true;
+            }
+            
+            renderCategoryDropdown() {
+                if (!this.config) return;
+                
+                this.categorySelect.innerHTML = '<option value="">Select main category...</option>' +
+                    this.config.categories.map(category => 
+                        `<option value="${category.name}">${category.icon} ${category.name}</option>`
+                    ).join('');
+                    
+                // Add event listener for category selection
+                this.categorySelect.onchange = () => {
+                    const categoryName = this.categorySelect.value;
+                    if (categoryName) {
+                        this.selectCategory(categoryName);
+                    } else {
+                        this.subcategorySelect.style.display = 'none';
+                        this.confirmCategoryBtn.disabled = true;
+                    }
+                };
+            }
+            
+            selectCategory(categoryName) {
+                this.selectedCategory = this.config.categories.find(c => c.name === categoryName);
+                
+                if (this.selectedCategory.subcategories.length > 0) {
+                    this.subcategorySelect.innerHTML = '<option value="">Select subcategory...</option>' +
+                        this.selectedCategory.subcategories.map(sub => `<option value="${sub}">${sub}</option>`).join('');
+                    this.subcategorySelect.style.display = 'block';
+                    this.confirmCategoryBtn.disabled = true;
+                } else {
+                    this.subcategorySelect.style.display = 'none';
+                    this.confirmCategoryBtn.disabled = false;
+                }
+            }
+            
+            confirmCategory() {
+                if (!this.selectedCategory) return;
+                
+                const subcategory = this.subcategorySelect.value;
+                if (this.selectedCategory.subcategories.length > 0 && !subcategory) {
+                    return;
+                }
+                
+                this.currentSession = {
+                    category: this.selectedCategory.name,
+                    subcategory: subcategory || null
+                };
+                
+                this.closeCategoryModal();
+                this.start();
+            }
+            
+            start() {
+                if (this.timer.isRunning) return;
+                
+                this.timer.startTime = Date.now() - this.timer.elapsedTime;
+                this.timer.isRunning = true;
+                this.timer.isPaused = false;
+                
+                this.startBtn.disabled = true;
+                this.pauseBtn.disabled = false;
+                this.stopBtn.disabled = false;
+                
+                this.updateCurrentSessionDisplay();
+                this.timer.interval = setInterval(() => this.updateDisplay(), 100);
+            }
+            
+            pause() {
+                if (!this.timer.isRunning) return;
+                
+                console.log('Pausing timer - currentSession:', this.currentSession);
+                this.timer.isRunning = false;
+                this.timer.isPaused = true;
+                clearInterval(this.timer.interval);
+                
+                this.startBtn.disabled = false;
+                this.pauseBtn.disabled = true;
+                this.startBtn.textContent = 'Resume';
+                console.log('Timer paused - isPaused:', this.timer.isPaused, 'buttonText:', this.startBtn.textContent);
+            }
+            
+            resumeTimer() {
+                console.log('resumeTimer called - isPaused:', this.timer.isPaused);
+                if (!this.timer.isPaused) return;
+                
+                this.timer.startTime = Date.now() - this.timer.elapsedTime;
+                this.timer.isRunning = true;
+                this.timer.isPaused = false;
+                
+                this.startBtn.disabled = true;
+                this.pauseBtn.disabled = false;
+                this.stopBtn.disabled = false;
+                this.startBtn.textContent = 'Start';
+                
+                this.updateCurrentSessionDisplay();
+                this.timer.interval = setInterval(() => this.updateDisplay(), 100);
+            }
+            
+            stop() {
+                if (!this.timer.isRunning && !this.timer.isPaused) return;
+                
+                const sessionDuration = this.timer.elapsedTime;
+                const minDuration = (this.config?.app?.minimum_session_minutes || 0.083) * 60 * 1000;
+                
+                if (sessionDuration < minDuration) {
+                    alert(`Session too short. Minimum duration is ${this.config?.app?.minimum_session_minutes || 0.083} minutes.`);
+                    return;
+                }
+                
+                this.showDetailModal();
+            }
+            
+            reset() {
+                this.timer.elapsedTime = 0;
+                this.timer.startTime = null;
+                this.timer.isRunning = false;
+                this.timer.isPaused = false;
+                
+                if (this.timer.interval) {
+                    clearInterval(this.timer.interval);
+                }
+                
+                this.startBtn.disabled = false;
+                this.pauseBtn.disabled = true;
+                this.stopBtn.disabled = true;
+                this.startBtn.textContent = 'Start';
+                
+                this.currentSession = { category: null, subcategory: null };
+                this.updateCurrentSessionDisplay();
+                this.updateDisplay();
+            }
+            
+            resetTimerOnly() {
+                this.timer.elapsedTime = 0;
+                this.timer.startTime = null;
+                this.timer.isRunning = false;
+                this.timer.isPaused = false;
+                
+                if (this.timer.interval) {
+                    clearInterval(this.timer.interval);
+                }
+                
+                this.startBtn.disabled = false;
+                this.pauseBtn.disabled = true;
+                this.stopBtn.disabled = true;
+                this.startBtn.textContent = 'Start';
+                
+                this.updateDisplay();
+            }
+            
+            saveSession() {
+                console.log('Saving session and resetting...');
+                const session = {
+                    id: Date.now(),
+                    category: this.currentSession.category,
+                    subcategory: this.currentSession.subcategory,
+                    duration: this.timer.elapsedTime,
+                    startTime: this.timer.startTime,
+                    endTime: Date.now(),
+                    date: new Date().toDateString()
+                };
+                
+                const history = this.getHistory();
+                history.unshift(session);
+                localStorage.setItem('mytime-history', JSON.stringify(history));
+                
+                this.updateProgress();
+            }
+            
+            updateDisplay() {
+                if (this.timer.isRunning) {
+                    this.timer.elapsedTime = Date.now() - this.timer.startTime;
+                }
+                
+                const time = this.formatTime(this.timer.elapsedTime);
+                this.timerDisplay.textContent = time;
+            }
+            
+            updateCurrentSessionDisplay() {
+                if (!this.currentSession.category) {
+                    this.currentSessionDiv.innerHTML = '<div class="session-info">No active session</div>';
+                    this.currentSessionDiv.classList.remove('active');
+                    return;
+                }
+                
+                const category = this.config.categories.find(c => c.name === this.currentSession.category);
+                const subcategoryText = this.currentSession.subcategory ? ` → ${this.currentSession.subcategory}` : '';
+                
+                this.currentSessionDiv.innerHTML = `
+                    <div class="session-category">${category?.icon || ''} ${this.currentSession.category}${subcategoryText}</div>
+                    <div class="session-info">Session in progress</div>
+                `;
+                this.currentSessionDiv.classList.add('active');
+            }
+            
+            formatTime(ms) {
+                const totalSeconds = Math.floor(ms / 1000);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            getHistory() {
+                const stored = localStorage.getItem('mytime-history');
+                return stored ? JSON.parse(stored) : [];
+            }
+            
+            updateProgress() {
+                if (!this.config) return;
+                
+                const categoryTotals = this.getTodayProgressFromCSV();
+                console.log('updateProgress from CSV - categoryTotals:', categoryTotals);
+                
+                this.progressList.innerHTML = this.config.categories
+                    .filter(category => {
+                        const totalMs = categoryTotals[category.name] || 0;
+                        return totalMs > 0; // Only show categories with activity
+                    })
+                    .map(category => {
+                        const totalMs = categoryTotals[category.name];
+                        const totalMinutes = Math.floor(totalMs / (1000 * 60));
+                        const targetMinutes = category.target_minutes;
+                        const percentage = Math.min((totalMinutes / targetMinutes) * 100, 100);
+                        
+                        return `
+                            <div class="progress-item">
+                                <span class="category-icon">${category.icon}</span>
+                                <div class="category-info">
+                                    <div class="category-name">${category.name}</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${percentage}%; background: ${category.color};"></div>
+                                    </div>
+                                    <div class="progress-text">${Math.floor(totalMinutes/60)}h ${totalMinutes%60}m / ${Math.floor(targetMinutes/60)}h ${targetMinutes%60}m</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('') || '<p style="text-align: center; color: #7f8c8d; padding: 20px;">No activity tracked today</p>';
+            }
+            
+            showConfig() {
+                this.minSessionInput.value = this.config?.app?.minimum_session_minutes || 5;
+                this.configModal.style.display = 'block';
+            }
+            
+            closeConfigModal() {
+                this.configModal.style.display = 'none';
+            }
+            
+            saveConfig() {
+                // In a real implementation, this would save back to config.yaml
+                // For now, we'll just update the in-memory config
+                if (this.config) {
+                    this.config.app.minimum_session_minutes = parseInt(this.minSessionInput.value);
+                }
+                this.closeConfigModal();
+            }
+            
+            getWeekNumber(date) {
+                const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+                const dayNum = d.getUTCDay() || 7;
+                d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+                const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+                return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+            }
+            
+            getDayNumber(date) {
+                // Convert Sunday=0 to Monday=1, Tuesday=2, etc.
+                const day = date.getDay();
+                return day === 0 ? 7 : day; // Sunday becomes 7, Monday=1, Tuesday=2, etc.
+            }
+            
+            exportSessionToCSV(session, details = '') {
+                const today = new Date();
+                const weekNum = this.getWeekNumber(today);
+                const dayNum = this.getDayNumber(today);
+                const filename = `${weekNum}_${dayNum}.csv`;
+                
+                const startDate = new Date(session.startTime);
+                const endDate = new Date(session.endTime);
+                const subject = session.subcategory ? `${session.category} - ${session.subcategory}` : session.category;
+                
+                // Use details for Description field if provided, otherwise default text
+                const description = details.trim() ? details.trim() : 'Time tracking session';
+                
+                const csvRow = [
+                    `"${subject}"`,
+                    startDate.toLocaleDateString(),
+                    startDate.toLocaleTimeString(),
+                    endDate.toLocaleDateString(),
+                    endDate.toLocaleTimeString(),
+                    'False',
+                    `"${description.replace(/"/g, '""')}"`, // Escape quotes for CSV
+                    '""',
+                    'False'
+                ].join(',');
+                
+                // Read existing CSV or create new
+                const existingCSV = localStorage.getItem(`csv-${filename}`) || 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private';
+                const updatedCSV = existingCSV + '\n' + csvRow;
+                
+                // Save to localStorage
+                localStorage.setItem(`csv-${filename}`, updatedCSV);
+                
+                // Download updated file
+                const blob = new Blob([updatedCSV], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+            
+
+            
+            loadHistory() {
+                // History is loaded when needed in updateProgress()
+            }
+            
+            showWeeklyReport() {
+                const history = this.getHistory();
+                const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                const weekSessions = history.filter(session => 
+                    new Date(session.startTime) >= oneWeekAgo
+                );
+                
+                const categoryTotals = {};
+                const dailyTotals = {};
+                
+                weekSessions.forEach(session => {
+                    const category = session.category;
+                    const day = new Date(session.startTime).toLocaleDateString();
+                    
+                    if (!categoryTotals[category]) categoryTotals[category] = 0;
+                    if (!dailyTotals[day]) dailyTotals[day] = 0;
+                    
+                    categoryTotals[category] += session.duration;
+                    dailyTotals[day] += session.duration;
+                });
+                
+                const categoryReport = Object.entries(categoryTotals)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([category, ms]) => {
+                        const hours = Math.floor(ms / (1000 * 60 * 60));
+                        const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+                        const categoryConfig = this.config?.categories.find(c => c.name === category);
+                        return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee;">
+                                <span>${categoryConfig?.icon || '📌'} ${category}</span>
+                                <span style="font-family: monospace; font-weight: 600;">${hours}h ${minutes}m</span>
+                            </div>
+                        `;
+                    }).join('');
+                
+                const dailyReport = Object.entries(dailyTotals)
+                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+                    .map(([day, ms]) => {
+                        const hours = Math.floor(ms / (1000 * 60 * 60));
+                        const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+                        return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee;">
+                                <span>${day}</span>
+                                <span style="font-family: monospace; font-weight: 600;">${hours}h ${minutes}m</span>
+                            </div>
+                        `;
+                    }).join('');
+                
+                const totalWeekMs = Object.values(categoryTotals).reduce((sum, ms) => sum + ms, 0);
+                const totalHours = Math.floor(totalWeekMs / (1000 * 60 * 60));
+                const totalMinutes = Math.floor((totalWeekMs % (1000 * 60 * 60)) / (1000 * 60));
+                
+                this.weeklyReportContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                        <h3 style="margin: 0; color: #2c3e50;">Total This Week: ${totalHours}h ${totalMinutes}m</h3>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">By Category</h3>
+                    <div style="margin-bottom: 25px;">
+                        ${categoryReport || '<p style="text-align: center; color: #7f8c8d;">No time tracked this week</p>'}
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">By Day</h3>
+                    <div>
+                        ${dailyReport || '<p style="text-align: center; color: #7f8c8d;">No time tracked this week</p>'}
+                    </div>
+                `;
+                
+                this.weeklyModal.style.display = 'block';
+            }
+            
+            closeWeeklyModal() {
+                this.weeklyModal.style.display = 'none';
+            }
+            
+            selectMetronome(bpm) {
+                let embedUrl = '';
+                let title = '';
+                
+                switch(bpm) {
+                    case '40':
+                        embedUrl = 'https://www.youtube.com/embed/4dV08PTx_9A?start=859&autoplay=1';
+                        title = 'Metronome 40 BPM';
+                        break;
+                    case '50':
+                        embedUrl = 'https://www.youtube.com/embed/gxpMFtACnfg?start=133&autoplay=1';
+                        title = 'Metronome 50 BPM';
+                        break;
+                    case '60':
+                        embedUrl = 'https://www.youtube.com/embed/gSmf7W3DUjs?autoplay=1';
+                        title = 'Metronome 60 BPM';
+                        break;
+                    case '70':
+                        embedUrl = 'https://www.youtube.com/embed/q8nqNWD8aPI?start=745&autoplay=1';
+                        title = 'Metronome 70 BPM';
+                        break;
+                    case '80':
+                        embedUrl = 'https://www.youtube.com/embed/cNhD7utblss?autoplay=1';
+                        title = 'Metronome 80 BPM';
+                        break;
+                    case '100':
+                        embedUrl = 'https://www.youtube.com/embed/iwYhgHscEtg?autoplay=1';
+                        title = 'Metronome 100 BPM';
+                        break;
+                    case '110':
+                        embedUrl = 'https://www.youtube.com/embed/dwVP07gsqOM?autoplay=1';
+                        title = 'Metronome 110 BPM';
+                        break;
+                    case '120':
+                        embedUrl = 'https://www.youtube.com/embed/VMNs8USvQBA?autoplay=1';
+                        title = 'Metronome 120 BPM';
+                        break;
+                    case '130':
+                        embedUrl = 'https://www.youtube.com/embed/1UgDIob4bXc?autoplay=1';
+                        title = 'Metronome 130 BPM';
+                        break;
+                    case '140':
+                        embedUrl = 'https://www.youtube.com/embed/bUZoycQCr1E?autoplay=1';
+                        title = 'Metronome 140 BPM';
+                        break;
+                    case '150':
+                        embedUrl = 'https://www.youtube.com/embed/f4MxgyZaQ1o?autoplay=1';
+                        title = 'Metronome 150 BPM';
+                        break;
+                    case '160':                    
+                        embedUrl = 'https://www.youtube.com/embed/qaVUswemNOE?autoplay=1';
+                        title = 'Metronome 160 BPM';
+                        break;
+                    case '170':
+                        embedUrl = 'https://www.youtube.com/embed/LS6gjgvHzJQ?autoplay=1';
+                        title = 'Metronome 170 BPM';
+                        break;
+                    case '180':
+                        embedUrl = 'https://www.youtube.com/embed/Nti9agHQcxA?autoplay=1';
+                        title = 'Metronome 180 BPM';
+                        break;
+                    case '190':
+                        embedUrl = 'https://www.youtube.com/embed/_haeYj_VQ2k?autoplay=1';
+                        title = 'Metronome 190 BPM';
+                        break;
+                    case '200':
+                        embedUrl = 'https://www.youtube.com/embed/xzG7pWXOB3U?autoplay=1';
+                        title = 'Metronome 200 BPM';
+                        break;
+                    default:
+                        embedUrl = '';
+                        title = '';             
+                }
+                
+                if (embedUrl) {
+                    this.metronomeIframe.src = embedUrl;
+                    this.metronomeTitle.textContent = title;
+                    this.metronomePlayer.style.display = 'block';
+                    document.getElementById('metronomeSelect').value = '';
+                }
+            }
+            
+            closeMetronome() {
+                this.metronomePlayer.style.display = 'none';
+                this.metronomeIframe.src = '';
+            }
+            
+            selectYouTubeVideo(bpm) {
+                let embedUrl = '';
+                
+                switch(bpm) {
+                    case '40':
+                        embedUrl = 'https://www.youtube.com/embed/4dV08PTx_9A?start=859&autoplay=1';
+                        break;
+                    case '50':
+                        embedUrl = 'https://www.youtube.com/embed/gxpMFtACnfg?start=133&autoplay=1';
+                        break;
+                    case '60':
+                        embedUrl = 'https://www.youtube.com/embed/gSmf7W3DUjs?autoplay=1';
+                        break;
+                    case '70':
+                        embedUrl = 'https://www.youtube.com/embed/q8nqNWD8aPI?start=745&autoplay=1';
+                        break;
+                    case '80':
+                        embedUrl = 'https://www.youtube.com/embed/cNhD7utblss?autoplay=1';
+                        break;
+                    case '100':
+                        embedUrl = 'https://www.youtube.com/embed/iwYhgHscEtg?autoplay=1';
+                        break;
+                    case '110':
+                        embedUrl = 'https://www.youtube.com/embed/dwVP07gsqOM?autoplay=1';
+                        break;
+                    case '120':
+                        embedUrl = 'https://www.youtube.com/embed/VMNs8USvQBA?autoplay=1';
+                        break;
+                    case '130':
+                        embedUrl = 'https://www.youtube.com/embed/1UgDIob4bXc?autoplay=1';
+                        break;
+                    case '140':
+                        embedUrl = 'https://www.youtube.com/embed/bUZoycQCr1E?autoplay=1';
+                        break;
+                    case '150':
+                        embedUrl = 'https://www.youtube.com/embed/f4MxgyZaQ1o?autoplay=1';
+                        break;
+                    case '160':                    
+                        embedUrl = 'https://www.youtube.com/embed/qaVUswemNOE?autoplay=1';
+                        break;
+                    case '170':
+                        embedUrl = 'https://www.youtube.com/embed/LS6gjgvHzJQ?autoplay=1';
+                        break;
+                    case '180':
+                        embedUrl = 'https://www.youtube.com/embed/Nti9agHQcxA?autoplay=1';
+                        break;
+                    case '190':
+                        embedUrl = 'https://www.youtube.com/embed/_haeYj_VQ2k?autoplay=1';
+                        break;
+                    case '200':
+                        embedUrl = 'https://www.youtube.com/embed/xzG7pWXOB3U?autoplay=1';
+                        break;
+                    default:
+                        embedUrl = '';             
+                }
+                
+                this.youtubeIframe.src = embedUrl;
+                if (!embedUrl) {
+                    this.youtubeSelect.value = '';
+                }
+            }
+            
+            getTodayProgressFromCSV() {
+                const today = new Date();
+                const todayStr = today.toLocaleDateString();
+                const weekNum = this.getWeekNumber(today);
+                const dayNum = this.getDayNumber(today);
+                const csvKey = `csv-${weekNum}_${dayNum}.csv`;
+                
+                const csvData = localStorage.getItem(csvKey);
+                if (!csvData) return {};
+                
+                const lines = csvData.split('\n');
+                const categoryTotals = {};
+                
+                // Skip header row, process data rows
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    // Parse CSV row: Subject,Start Date,Start Time,End Date,End Time,...
+                    const columns = this.parseCSVRow(line);
+                    if (columns.length < 5) continue;
+                    
+                    const subject = columns[0].replace(/"/g, '');
+                    const startDate = columns[1];
+                    const startTime = columns[2];
+                    const endTime = columns[4];
+                    
+                    // Check if this entry is from today
+                    if (startDate === todayStr) {
+                        // Extract category from subject (format: "Category - Subcategory" or "Category")
+                        const category = subject.split(' - ')[0];
+                        
+                        // Calculate duration from start and end times
+                        const startDateTime = new Date(startDate + ' ' + startTime);
+                        const endDateTime = new Date(startDate + ' ' + endTime);
+                        const duration = endDateTime - startDateTime;
+                        
+                        if (!categoryTotals[category]) {
+                            categoryTotals[category] = 0;
+                        }
+                        categoryTotals[category] += duration;
+                    }
+                }
+                
+                return categoryTotals;
+            }
+            
+            parseCSVRow(row) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < row.length; i++) {
+                    const char = row[i];
+                    
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                result.push(current);
+                return result;
+            }
+            
+            showDetailModal() {
+                this.sessionDetails.value = '';
+                this.detailModal.style.display = 'block';
+            }
+            
+            closeDetailModal() {
+                this.detailModal.style.display = 'none';
+            }
+            
+            skipDetails() {
+                const session = this.createSessionObject();
+                this.saveSession();
+                this.exportSessionToCSV(session);
+                this.closeDetailModal();
+                this.resetTimerOnly();
+            }
+            
+            saveWithDetails() {
+                const session = this.createSessionObject();
+                const details = this.sessionDetails.value;
+                this.saveSession();
+                this.exportSessionToCSV(session, details);
+                this.closeDetailModal();
+                this.resetTimerOnly();
+            }
+            
+            createSessionObject() {
+                return {
+                    id: Date.now(),
+                    category: this.currentSession.category,
+                    subcategory: this.currentSession.subcategory,
+                    duration: this.timer.elapsedTime,
+                    startTime: this.timer.startTime,
+                    endTime: Date.now(),
+                    date: new Date().toDateString()
+                };
+            }
+        }
+
+        // Event listener for subcategory selection
+        document.addEventListener('DOMContentLoaded', () => {
+            const subcategorySelect = document.getElementById('subcategorySelect');
+            subcategorySelect.addEventListener('change', () => {
+                const confirmBtn = document.getElementById('confirmCategoryBtn');
+                const hasSubcategories = subcategorySelect.style.display !== 'none';
+                confirmBtn.disabled = hasSubcategories ? !subcategorySelect.value : !window.app.selectedCategory;
+            });
+        });
+
+        // Initialize app
+        console.log('Initializing MyTimeApp...');
+        try {
+            window.app = new MyTimeApp();
+            console.log('MyTimeApp initialized successfully');
+        } catch (error) {
+            console.error('Error initializing MyTimeApp:', error);
+        }
+        
+        // Register service worker (disabled for localhost testing)
+        // if ('serviceWorker' in navigator) {
+        //     window.addEventListener('load', () => {
+        //         navigator.serviceWorker.register('sw.js')
+        //             .then(registration => console.log('SW registered'))
+        //             .catch(error => console.log('SW registration failed'));
+        //     });
+        // }
+    </script>
+</body>
+</html>

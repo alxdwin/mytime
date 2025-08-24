@@ -1,0 +1,116 @@
+app:
+  name: "MyTime"
+  version: "1.0"
+  minimum_session_minutes: 0.083
+
+categories:
+  - name: "Work"
+    color: "#3498db"
+    icon: "💼"
+    target_minutes: 480
+    subcategories:
+      - "Meetings"
+      - "Coding"
+      - "Documentation"
+      - "Planning"
+      - "Email"
+      - "Admin"
+      
+  - name: "Study"
+    color: "#e74c3c"
+    icon: "📚"
+    target_minutes: 120
+    subcategories:
+      - "Reading"
+      - "Research"
+      - "Practice"
+      - "Notes"
+      - "Review"
+      
+  - name: "Music Practice"
+    color: "#9b59b6"
+    icon: "🎵"
+    target_minutes: 90
+    subcategories:
+      - "Piano"
+      - "Guitar"
+      - "Theory"
+      - "Recording"
+      - "Listening"
+      
+  - name: "Exercise"
+    color: "#e67e22"
+    icon: "💪"
+    target_minutes: 60
+    subcategories:
+      - "Cardio"
+      - "Strength"
+      - "Stretching"
+      - "Sports"
+      - "Walking"
+      
+  - name: "Project"
+    color: "#1abc9c"
+    icon: "🚀"
+    target_minutes: 240
+    subcategories:
+      - "Development"
+      - "Design"
+      - "Testing"
+      - "Planning"
+      - "Research"
+      
+  - name: "Learning"
+    color: "#f39c12"
+    icon: "🧠"
+    target_minutes: 90
+    subcategories:
+      - "Tutorials"
+      - "Courses"
+      - "Languages"
+      - "Skills"
+      - "Books"
+      
+  - name: "Creative"
+    color: "#e91e63"
+    icon: "🎨"
+    target_minutes: 60
+    subcategories:
+      - "Writing"
+      - "Drawing"
+      - "Photography"
+      - "Design"
+      - "Crafts"
+      
+  - name: "Violin Practice"
+    color: "#8e44ad"
+    icon: "🎻"
+    target_minutes: 1200
+    subcategories:
+      - "Scales"
+      - "Etudes"
+      - "Repertoire"
+      - "Sight Reading"
+      - "Recording"
+      
+  - name: "Break"
+    color: "#95a5a6"
+    icon: "☕"
+    target_minutes: 120
+    subcategories:
+      - "Coffee"
+      - "Lunch"
+      - "Social"
+      - "Rest"
+      - "Walk"
+      
+  - name: "Other"
+    color: "#34495e"
+    icon: "📌"
+    target_minutes: 300
+    subcategories:
+      - "Personal"
+      - "Household"
+      - "Communication"
+      - "Travel"
+      - "Miscellaneous"
