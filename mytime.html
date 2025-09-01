@@ -624,6 +624,7 @@
                         <button id="pauseBtn" class="btn btn-pause" disabled>Pause</button>
                         <button id="stopBtn" class="btn btn-stop" disabled>📅 Save to Calendar</button>
                         <button id="resetBtn" class="btn btn-reset">Reset</button>
+                        <button id="manualEntryBtn" class="btn btn-secondary">✏️ Manual Entry</button>
                     </div>
                 </div>
             </div>
@@ -738,6 +739,11 @@
             </div>
             
             <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Email Address (optional):</label>
+                <input type="email" id="emailAddress" placeholder="email@example.com" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 15px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 10px; font-weight: 600;">Session Details (optional):</label>
                 <textarea id="sessionDetails" rows="4" placeholder="What did you accomplish? Any notes about this session..." style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
             </div>
@@ -745,6 +751,58 @@
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="window.app.skipDetails()">Skip</button>
                 <button class="btn btn-primary" onclick="window.app.saveWithDetails()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Time Entry Modal -->
+    <div id="manualEntryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manual Time Entry</h2>
+                <p>Enter a time session manually</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Category:</label>
+                <select id="manualCategorySelect" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 10px;">
+                    <option value="">Select category...</option>
+                </select>
+                
+                <select id="manualSubcategorySelect" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; display: none;">
+                    <option value="">Select subcategory...</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Date:</label>
+                <input type="date" id="manualDate" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 10px;">
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                <div>
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Start Time:</label>
+                    <input type="time" id="manualStartTime" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">End Time:</label>
+                    <input type="time" id="manualEndTime" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Email Address (optional):</label>
+                <input type="email" id="manualEmailAddress" placeholder="email@example.com" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 15px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Session Details (optional):</label>
+                <textarea id="manualSessionDetails" rows="4" placeholder="What did you accomplish? Any notes about this session..." style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="window.app.closeManualEntryModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="window.app.saveManualEntry()">Save Entry</button>
             </div>
         </div>
     </div>
@@ -856,7 +914,7 @@
 
         // Email helper class for sending CSV to Google Calendar
         class EmailCalendarHelper {
-            static createEmailWithCSV(session, details = '') {
+            static createEmailWithCSV(session, details = '', emailAddress = '') {
                 const today = new Date();
                 const weekNum = this.getWeekNumber(today);
                 const dayNum = this.getDayNumber(today);
@@ -895,7 +953,8 @@ The CSV file "${filename}" has been downloaded automatically.
 
 Best regards`);
                 
-                const mailto = `mailto:?subject=${subject}&body=${body}`;
+                const recipient = emailAddress ? emailAddress : '';
+                const mailto = `mailto:${recipient}?subject=${subject}&body=${body}`;
                 window.open(mailto, '_blank');
             }
             
@@ -1123,6 +1182,8 @@ Best regards`);
                 this.pauseBtn.onclick = () => this.pause();
                 this.stopBtn.onclick = () => this.stop();
                 this.resetBtn.onclick = () => this.reset();
+                
+                document.getElementById('manualEntryBtn').onclick = () => this.showManualEntryModal();
                 
                 // YouTube player event
                 this.youtubeSelect.addEventListener('change', (e) => {
@@ -1779,11 +1840,124 @@ Best regards`);
             
             showDetailModal() {
                 this.sessionDetails.value = '';
+                document.getElementById('emailAddress').value = '';
                 this.detailModal.style.display = 'block';
             }
             
             closeDetailModal() {
                 this.detailModal.style.display = 'none';
+            }
+            
+            showManualEntryModal() {
+                // Clear form
+                document.getElementById('manualCategorySelect').value = '';
+                document.getElementById('manualSubcategorySelect').value = '';
+                document.getElementById('manualSubcategorySelect').style.display = 'none';
+                document.getElementById('manualDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('manualStartTime').value = '';
+                document.getElementById('manualEndTime').value = '';
+                document.getElementById('manualEmailAddress').value = '';
+                document.getElementById('manualSessionDetails').value = '';
+                
+                // Populate categories
+                this.populateManualCategorySelect();
+                
+                document.getElementById('manualEntryModal').style.display = 'block';
+            }
+            
+            closeManualEntryModal() {
+                document.getElementById('manualEntryModal').style.display = 'none';
+            }
+            
+            populateManualCategorySelect() {
+                const select = document.getElementById('manualCategorySelect');
+                select.innerHTML = '<option value="">Select category...</option>';
+                
+                this.config.categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.name;
+                    option.textContent = `${category.icon} ${category.name}`;
+                    select.appendChild(option);
+                });
+                
+                // Add event listener for subcategory handling
+                select.onchange = () => this.handleManualCategoryChange();
+            }
+            
+            handleManualCategoryChange() {
+                const categoryName = document.getElementById('manualCategorySelect').value;
+                const subcategorySelect = document.getElementById('manualSubcategorySelect');
+                
+                if (!categoryName) {
+                    subcategorySelect.style.display = 'none';
+                    return;
+                }
+                
+                const category = this.config.categories.find(c => c.name === categoryName);
+                if (category && category.subcategories && category.subcategories.length > 0) {
+                    subcategorySelect.innerHTML = '<option value="">Select subcategory...</option>';
+                    category.subcategories.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub;
+                        option.textContent = sub;
+                        subcategorySelect.appendChild(option);
+                    });
+                    subcategorySelect.style.display = 'block';
+                } else {
+                    subcategorySelect.style.display = 'none';
+                }
+            }
+            
+            saveManualEntry() {
+                const categoryName = document.getElementById('manualCategorySelect').value;
+                const subcategoryName = document.getElementById('manualSubcategorySelect').value;
+                const date = document.getElementById('manualDate').value;
+                const startTime = document.getElementById('manualStartTime').value;
+                const endTime = document.getElementById('manualEndTime').value;
+                const emailAddress = document.getElementById('manualEmailAddress').value;
+                const details = document.getElementById('manualSessionDetails').value;
+                
+                if (!categoryName || !date || !startTime || !endTime) {
+                    alert('Please fill in all required fields (category, date, start time, end time)');
+                    return;
+                }
+                
+                // Create start and end timestamps
+                const startDateTime = new Date(`${date}T${startTime}`);
+                const endDateTime = new Date(`${date}T${endTime}`);
+                
+                if (endDateTime <= startDateTime) {
+                    alert('End time must be after start time');
+                    return;
+                }
+                
+                // Create session object
+                const session = {
+                    id: Date.now(),
+                    category: categoryName,
+                    subcategory: subcategoryName || null,
+                    startTime: startDateTime.getTime(),
+                    endTime: endDateTime.getTime(),
+                    duration: endDateTime.getTime() - startDateTime.getTime()
+                };
+                
+                // Save session
+                const sessions = JSON.parse(localStorage.getItem('mytime_sessions') || '[]');
+                sessions.push(session);
+                localStorage.setItem('mytime_sessions', JSON.stringify(sessions));
+                
+                // Export to CSV and email
+                this.exportSessionToCSV(session, details);
+                if (emailAddress || details) {
+                    EmailCalendarHelper.createEmailWithCSV(session, details, emailAddress);
+                }
+                
+                // Update progress display
+                this.updateProgress();
+                
+                this.closeManualEntryModal();
+                
+                alert(`Manual entry saved: ${this.formatDuration(session.duration)} for ${categoryName}${subcategoryName ? ' - ' + subcategoryName : ''}`);
             }
             
             skipDetails() {
@@ -1797,13 +1971,14 @@ Best regards`);
             saveWithDetails() {
                 const session = this.createSessionObject();
                 const details = this.sessionDetails.value;
+                const emailAddress = document.getElementById('emailAddress').value;
                 
                 // Save locally first
                 this.saveSession();
                 this.exportSessionToCSV(session, details);
                 
                 // Create email with CSV for Google Calendar import
-                EmailCalendarHelper.createEmailWithCSV(session, details);
+                EmailCalendarHelper.createEmailWithCSV(session, details, emailAddress);
                 
                 this.closeDetailModal();
                 this.resetTimerOnly();
