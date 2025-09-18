@@ -29,146 +29,6 @@
             margin: 0 auto;
         }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0px;
-            margin-bottom: 20px;
-        }
-
-        .timer-section {
-            max-width: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .youtube-section {
-            max-width: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .youtube-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 0 20px 20px 0;
-            padding: 20px;
-            margin: 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            height: 450px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .youtube-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .youtube-title {
-            font-weight: 600;
-            color: #f1c40f;
-            font-size: 1.1rem;
-        }
-
-        .youtube-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 0;
-            flex: none;
-        }
-
-        .youtube-select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            outline: none;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            color: #f1c40f;
-            font-weight: normal;
-            height: auto;
-        }
-
-        .youtube-select:focus {
-            border-color: rgba(255,255,255,0.8);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        .youtube-select option {
-            background: #2c3e50;
-            color: #f1c40f;
-        }
-
-        .youtube-select option:checked {
-            background: #f1c40f;
-            color: #2c3e50;
-        }
-
-        .youtube-iframe {
-            width: 100%;
-            flex: 1;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 320px;
-        }
-
-        @media (max-width: 1000px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 0px;
-            }
-            
-            .timer-section,
-            .youtube-section {
-                max-width: 100%;
-            }
-            
-            .timer-card {
-                border-radius: 20px 20px 0 0;
-                min-height: 300px;
-            }
-            
-            .youtube-card {
-                border-radius: 0 0 20px 20px;
-                min-height: 300px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 10px;
-            }
-            
-            .timer-display {
-                font-size: 3rem;
-            }
-            
-            .controls {
-                gap: 10px;
-            }
-            
-            .btn {
-                min-width: 80px;
-                padding: 10px 16px;
-                font-size: 0.9rem;
-            }
-            
-            .timer-card,
-            .youtube-card {
-                padding: 20px;
-                min-height: 250px;
-            }
-        }
-
         .header {
             text-align: center;
             color: white;
@@ -227,6 +87,25 @@
 
         .tab-content.active {
             display: block;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0px;
+            margin-bottom: 20px;
+        }
+
+        .timer-section {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .youtube-section {
+            max-width: none;
+            margin: 0;
+            padding: 0;
         }
 
         .timer-card {
@@ -317,6 +196,79 @@
             transform: translateY(-2px);
         }
 
+        .youtube-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0 20px 20px 0;
+            padding: 20px;
+            margin: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .youtube-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .youtube-title {
+            font-weight: 600;
+            color: #f1c40f;
+            font-size: 1.1rem;
+        }
+
+        .youtube-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 0;
+            flex: none;
+        }
+
+        .youtube-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: #f1c40f;
+            font-weight: normal;
+            height: auto;
+        }
+
+        .youtube-select:focus {
+            border-color: rgba(255,255,255,0.8);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .youtube-select option {
+            background: #2c3e50;
+            color: #f1c40f;
+        }
+
+        .youtube-select option:checked {
+            background: #f1c40f;
+            color: #2c3e50;
+        }
+
+        .youtube-iframe {
+            width: 100%;
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 320px;
+        }
+
         .progress-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 20px;
@@ -361,7 +313,7 @@
         }
 
         .progress-item:hover {
-            background-color: #f8f9fa;
+            background-color: rgba(255,255,255,0.1);
         }
 
         .category-icon {
@@ -380,11 +332,12 @@
             font-weight: 500;
             font-size: 0.9rem;
             margin-bottom: 2px;
+            color: white;
         }
 
         .progress-bar {
             height: 6px;
-            background: #ecf0f1;
+            background: rgba(255,255,255,0.2);
             border-radius: 3px;
             overflow: hidden;
             margin-bottom: 2px;
@@ -398,7 +351,7 @@
 
         .progress-text {
             font-size: 0.8rem;
-            color: #7f8c8d;
+            color: rgba(255,255,255,0.8);
         }
 
         .config-btn {
@@ -416,58 +369,29 @@
             backdrop-filter: blur(10px);
         }
 
-
-
-        .metronome-player {
-            position: fixed;
-            top: 20%;
-            left: calc(50% + 280px);
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            z-index: 1000;
-            display: none;
-            width: 400px;
-        }
-        
-        @media (max-width: 1200px) {
-            .metronome-player {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 90%;
-                max-width: 400px;
-            }
-        }
-
-        .metronome-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .metronome-title {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .close-metronome {
-            background: #e74c3c;
+        .current-session {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-size: 1.2rem;
+            text-align: center;
         }
 
-        .metronome-iframe {
-            border: none;
-            border-radius: 10px;
+        .current-session.active {
+            background: rgba(39, 174, 96, 0.2);
+            border: 2px solid rgba(39, 174, 96, 0.5);
+        }
+
+        .session-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .session-category {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
 
         .modal {
@@ -503,45 +427,6 @@
         .modal-header h2 {
             color: #2c3e50;
             margin-bottom: 10px;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .category-btn {
-            background: white;
-            border: 2px solid #ecf0f1;
-            border-radius: 15px;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .category-btn.selected {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .category-icon-large {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .category-name-large {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
         }
 
         .subcategory-select {
@@ -582,31 +467,28 @@
             background: #7f8c8d;
         }
 
-        .current-session {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            color: white;
-            text-align: center;
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 0px;
+            }
+            
+            .timer-section,
+            .youtube-section {
+                max-width: 100%;
+            }
+            
+            .timer-card {
+                border-radius: 20px 20px 0 0;
+                min-height: 300px;
+            }
+            
+            .youtube-card {
+                border-radius: 0 0 20px 20px;
+                min-height: 300px;
+            }
         }
-
-        .current-session.active {
-            background: rgba(39, 174, 96, 0.2);
-            border: 2px solid rgba(39, 174, 96, 0.5);
-        }
-
-        .session-info {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .session-category {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
+        
         @media (max-width: 600px) {
             .container {
                 padding: 0 10px;
@@ -626,15 +508,12 @@
                 font-size: 0.9rem;
             }
             
-            .category-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 10px;
+            .timer-card,
+            .youtube-card {
+                padding: 20px;
+                min-height: 250px;
             }
-            
-            .category-btn {
-                padding: 15px 10px;
-            }
-            
+
             .config-btn {
                 width: 45px;
                 height: 45px;
@@ -645,7 +524,6 @@
 </head>
 <body>
     <button class="config-btn" onclick="window.app.showConfig()" title="Settings">⚙️</button>
-    
 
     <div class="container">
         <header class="header">
@@ -665,48 +543,48 @@
             </div>
             
             <div class="main-content">
-            <div class="timer-section">
-                <div class="timer-card">
-                    <div class="timer-display" id="timer">00:00:00</div>
-                    
-                    <div class="controls">
-                        <button id="startBtn" class="btn btn-start">Start</button>
-                        <button id="pauseBtn" class="btn btn-pause" disabled>Pause</button>
-                        <button id="stopBtn" class="btn btn-stop" disabled>📅 Save to Calendar</button>
-                        <button id="resetBtn" class="btn btn-reset">Reset</button>
+                <div class="timer-section">
+                    <div class="timer-card">
+                        <div class="timer-display" id="timer">00:00:00</div>
+                        
+                        <div class="controls">
+                            <button id="startBtn" class="btn btn-start">Start</button>
+                            <button id="pauseBtn" class="btn btn-pause" disabled>Pause</button>
+                            <button id="stopBtn" class="btn btn-stop" disabled>📅 Save to Calendar</button>
+                            <button id="resetBtn" class="btn btn-reset">Reset</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="youtube-section">
-                <div class="youtube-card">
-                    <div class="youtube-header">
-                        <div class="youtube-title">🎵 Metronome</div>
-                    </div>
-                    <div class="youtube-controls">
-                        <select class="youtube-select" id="youtubeSelect">
-                            <option value="">Choose metronome</option>
-                            <option value="40">Metronome 40 BPM</option>
-                            <option value="50">Metronome 50 BPM</option>
-                            <option value="60">Metronome 60 BPM</option>
-                            <option value="70">Metronome 70 BPM</option>
-                            <option value="80">Metronome 80 BPM</option>
-                            <option value="100">Metronome 100 BPM</option>
-                            <option value="110">Metronome 110 BPM</option>
-                            <option value="120">Metronome 120 BPM</option>
-                            <option value="130">Metronome 130 BPM</option>
-                            <option value="140">Metronome 140 BPM</option>
-                            <option value="150">Metronome 150 BPM</option>
-                            <option value="160">Metronome 160 BPM</option>
-                            <option value="170">Metronome 170 BPM</option>
-                            <option value="180">Metronome 180 BPM</option>
-                            <option value="190">Metronome 190 BPM</option>
-                            <option value="200">Metronome 200 BPM</option>
-                        </select>
-                        <iframe class="youtube-iframe" id="youtubeIframe" src="" allowfullscreen></iframe>
+                <div class="youtube-section">
+                    <div class="youtube-card">
+                        <div class="youtube-header">
+                            <div class="youtube-title">🎵 Metronome</div>
+                        </div>
+                        <div class="youtube-controls">
+                            <select class="youtube-select" id="youtubeSelect">
+                                <option value="">Choose metronome</option>
+                                <option value="40">Metronome 40 BPM</option>
+                                <option value="50">Metronome 50 BPM</option>
+                                <option value="60">Metronome 60 BPM</option>
+                                <option value="70">Metronome 70 BPM</option>
+                                <option value="80">Metronome 80 BPM</option>
+                                <option value="100">Metronome 100 BPM</option>
+                                <option value="110">Metronome 110 BPM</option>
+                                <option value="120">Metronome 120 BPM</option>
+                                <option value="130">Metronome 130 BPM</option>
+                                <option value="140">Metronome 140 BPM</option>
+                                <option value="150">Metronome 150 BPM</option>
+                                <option value="160">Metronome 160 BPM</option>
+                                <option value="170">Metronome 170 BPM</option>
+                                <option value="180">Metronome 180 BPM</option>
+                                <option value="190">Metronome 190 BPM</option>
+                                <option value="200">Metronome 200 BPM</option>
+                            </select>
+                            <iframe class="youtube-iframe" id="youtubeIframe" src="" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             
             <div class="progress-card">
@@ -718,7 +596,6 @@
             </div>
         </div>
         
-<<<<<<< HEAD
         <!-- Google Calendar Tab Content -->
         <div id="calendarTab" class="tab-content">
             <div class="progress-card">
@@ -760,15 +637,6 @@
                     <button class="btn btn-primary" onclick="window.app.showTab('mytime')" style="background: #f1c40f; color: #2c3e50;">
                         ← Back to Timer
                     </button>
-=======
-        <div class="progress-card">
-            <div class="progress-header">
-                <span class="progress-title">Today's Progress</span>
-                <div style="display: flex; gap: 10px;">
-                    <button class="export-btn" onclick="window.app.exportAllData()">📤 Export CSV</button>
-                    <button class="export-btn" onclick="window.app.showImportModal()">📥 Import CSV</button>
-                    <button class="export-btn" onclick="window.app.showWeeklyReport()">Weekly Report</button>
->>>>>>> 1ebb602a55f4879a7775b7941a463debb89d562c
                 </div>
             </div>
         </div>
@@ -844,11 +712,6 @@
             </div>
             
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Email Address (optional):</label>
-                <input type="email" id="emailAddress" placeholder="email@example.com" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 15px;">
-            </div>
-            
-            <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 10px; font-weight: 600;">Session Details (optional):</label>
                 <textarea id="sessionDetails" rows="4" placeholder="What did you accomplish? Any notes about this session..." style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
             </div>
@@ -860,194 +723,10 @@
         </div>
     </div>
 
-    <!-- Manual Time Entry Modal -->
-    <div id="manualEntryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Manual Time Entry</h2>
-                <p>Enter a time session manually</p>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Category:</label>
-                <select id="manualCategorySelect" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 10px;">
-                    <option value="">Select category...</option>
-                </select>
-                
-                <select id="manualSubcategorySelect" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; display: none;">
-                    <option value="">Select subcategory...</option>
-                </select>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Date:</label>
-                <input type="date" id="manualDate" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 10px;">
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <div>
-                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Start Time:</label>
-                    <input type="time" id="manualStartTime" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
-                </div>
-                <div>
-                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">End Time:</label>
-                    <input type="time" id="manualEndTime" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
-                </div>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Email Address (optional):</label>
-                <input type="email" id="manualEmailAddress" placeholder="email@example.com" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; margin-bottom: 15px;">
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Session Details (optional):</label>
-                <textarea id="manualSessionDetails" rows="4" placeholder="What did you accomplish? Any notes about this session..." style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
-            </div>
-            
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="window.app.closeManualEntryModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="window.app.saveManualEntry()">Save Entry</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CSV Import Modal -->
-    <div id="csvImportModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Import CSV Data</h2>
-                <p>Upload a CSV file to restore your time tracking data</p>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Select CSV File:</label>
-                <input type="file" id="csvFileInput" accept=".csv" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 600;">Import Mode:</label>
-                <select id="importMode" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 10px; font-family: inherit;">
-                    <option value="merge">Merge with existing data</option>
-                    <option value="replace">Replace all data</option>
-                </select>
-            </div>
-            
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="window.app.closeImportModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="window.app.importCSV()">Import</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Metronome Player -->
-    <div id="metronomePlayer" class="metronome-player">
-        <div class="metronome-header">
-            <span class="metronome-title" id="metronomeTitle">Metronome</span>
-            <button class="close-metronome" onclick="window.app.closeMetronome()">×</button>
-        </div>
-        <iframe id="metronomeIframe" class="metronome-iframe" width="360" height="200" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-
     <script>
-        class GoogleCalendarAPI {
-            constructor() {
-                // Load from config file (not committed to git)
-                const config = window.GOOGLE_CONFIG || {};
-                this.CLIENT_ID = config.CLIENT_ID || 'not-configured';
-                this.API_KEY = '[REDACTED:api-key]';
-                this.API_KEY = config.API_KEY || 'not-configured';
-                this.DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
-                this.SCOPES = 'https://www.googleapis.com/auth/calendar';
-                this.gapi = null;
-                this.isSignedIn = false;
-                
-                // Override API_KEY with config
-                if (config.API_KEY) {
-                    this.API_KEY = config.API_KEY;
-                }
-            }
-
-            async initialize() {
-                if (typeof gapi === 'undefined') {
-                    console.log('Google API not loaded');
-                    return false;
-                }
-
-                await new Promise((resolve) => gapi.load('client:auth2', resolve));
-                
-                try {
-                    await gapi.client.init({
-                        apiKey: this.API_KEY,
-                        clientId: this.CLIENT_ID,
-                        discoveryDocs: [this.DISCOVERY_DOC],
-                        scope: this.SCOPES
-                    });
-                    
-                    this.gapi = gapi;
-                    this.isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-                    return true;
-                } catch (error) {
-                    console.error('Error initializing Google API:', error);
-                    return false;
-                }
-            }
-
-            async signIn() {
-                if (!this.gapi) return false;
-                
-                try {
-                    await this.gapi.auth2.getAuthInstance().signIn();
-                    this.isSignedIn = true;
-                    return true;
-                } catch (error) {
-                    console.error('Error signing in:', error);
-                    return false;
-                }
-            }
-
-            async createEvent(session, details = '') {
-                if (!this.isSignedIn) {
-                    const signedIn = await this.signIn();
-                    if (!signedIn) return false;
-                }
-
-                const startDate = new Date(session.startTime);
-                const endDate = new Date(session.endTime);
-                const subject = session.subcategory ? `${session.category} - ${session.subcategory}` : session.category;
-                const description = details.trim() ? details.trim() : 'Time tracking session from MyTime app';
-
-                const event = {
-                    'summary': subject,
-                    'description': description,
-                    'start': {
-                        'dateTime': startDate.toISOString(),
-                        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
-                    },
-                    'end': {
-                        'dateTime': endDate.toISOString(),
-                        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
-                    },
-                    'colorId': '9' // Blue color for work events
-                };
-
-                try {
-                    const response = await this.gapi.client.calendar.events.insert({
-                        'calendarId': 'primary',
-                        'resource': event
-                    });
-                    console.log('Event created:', response.result);
-                    return true;
-                } catch (error) {
-                    console.error('Error creating event:', error);
-                    return false;
-                }
-            }
-        }
-
         // Email helper class for sending CSV to Google Calendar
         class EmailCalendarHelper {
-            static createEmailWithCSV(session, details = '', emailAddress = '') {
+            static createEmailWithCSV(session, details = '') {
                 const today = new Date();
                 const weekNum = this.getWeekNumber(today);
                 const dayNum = this.getDayNumber(today);
@@ -1086,8 +765,7 @@ The CSV file "${filename}" has been downloaded automatically.
 
 Best regards`);
                 
-                const recipient = emailAddress ? emailAddress : '';
-                const mailto = `mailto:${recipient}?subject=${subject}&body=${body}`;
+                const mailto = `mailto:?subject=${subject}&body=${body}`;
                 window.open(mailto, '_blank');
             }
             
@@ -1184,9 +862,6 @@ Best regards`);
                 this.weeklyReportContent = document.getElementById('weeklyReportContent');
                 this.detailModal = document.getElementById('detailModal');
                 this.sessionDetails = document.getElementById('sessionDetails');
-                this.metronomePlayer = document.getElementById('metronomePlayer');
-                this.metronomeIframe = document.getElementById('metronomeIframe');
-                this.metronomeTitle = document.getElementById('metronomeTitle');
                 this.youtubeSelect = document.getElementById('youtubeSelect');
                 this.youtubeIframe = document.getElementById('youtubeIframe');
             }
@@ -1594,7 +1269,7 @@ Best regards`);
                                 </div>
                             </div>
                         `;
-                    }).join('') || '<p style="text-align: center; color: #7f8c8d; padding: 20px;">No activity tracked today</p>';
+                    }).join('') || '<p style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">No activity tracked today</p>';
             }
             
             showConfig() {
@@ -1630,9 +1305,9 @@ Best regards`);
             }
             
             exportSessionToCSV(session, details = '') {
-                const sessionDate = new Date(session.startTime);
-                const weekNum = this.getWeekNumber(sessionDate);
-                const dayNum = this.getDayNumber(sessionDate);
+                const today = new Date();
+                const weekNum = this.getWeekNumber(today);
+                const dayNum = this.getDayNumber(today);
                 const filename = `${weekNum}_${dayNum}.csv`;
                 
                 const startDate = new Date(session.startTime);
@@ -1670,9 +1345,7 @@ Best regards`);
                 a.click();
                 window.URL.revokeObjectURL(url);
             }
-            
 
-            
             loadHistory() {
                 // History is loaded when needed in updateProgress()
             }
@@ -1752,93 +1425,6 @@ Best regards`);
                 this.weeklyModal.style.display = 'none';
             }
             
-            selectMetronome(bpm) {
-                let embedUrl = '';
-                let title = '';
-                
-                switch(bpm) {
-                    case '40':
-                        embedUrl = 'https://www.youtube.com/embed/4dV08PTx_9A?start=859&autoplay=1';
-                        title = 'Metronome 40 BPM';
-                        break;
-                    case '50':
-                        embedUrl = 'https://www.youtube.com/embed/gxpMFtACnfg?start=133&autoplay=1';
-                        title = 'Metronome 50 BPM';
-                        break;
-                    case '60':
-                        embedUrl = 'https://www.youtube.com/embed/gSmf7W3DUjs?autoplay=1';
-                        title = 'Metronome 60 BPM';
-                        break;
-                    case '70':
-                        embedUrl = 'https://www.youtube.com/embed/q8nqNWD8aPI?start=745&autoplay=1';
-                        title = 'Metronome 70 BPM';
-                        break;
-                    case '80':
-                        embedUrl = 'https://www.youtube.com/embed/cNhD7utblss?autoplay=1';
-                        title = 'Metronome 80 BPM';
-                        break;
-                    case '100':
-                        embedUrl = 'https://www.youtube.com/embed/iwYhgHscEtg?autoplay=1';
-                        title = 'Metronome 100 BPM';
-                        break;
-                    case '110':
-                        embedUrl = 'https://www.youtube.com/embed/dwVP07gsqOM?autoplay=1';
-                        title = 'Metronome 110 BPM';
-                        break;
-                    case '120':
-                        embedUrl = 'https://www.youtube.com/embed/VMNs8USvQBA?autoplay=1';
-                        title = 'Metronome 120 BPM';
-                        break;
-                    case '130':
-                        embedUrl = 'https://www.youtube.com/embed/1UgDIob4bXc?autoplay=1';
-                        title = 'Metronome 130 BPM';
-                        break;
-                    case '140':
-                        embedUrl = 'https://www.youtube.com/embed/bUZoycQCr1E?autoplay=1';
-                        title = 'Metronome 140 BPM';
-                        break;
-                    case '150':
-                        embedUrl = 'https://www.youtube.com/embed/f4MxgyZaQ1o?autoplay=1';
-                        title = 'Metronome 150 BPM';
-                        break;
-                    case '160':                    
-                        embedUrl = 'https://www.youtube.com/embed/qaVUswemNOE?autoplay=1';
-                        title = 'Metronome 160 BPM';
-                        break;
-                    case '170':
-                        embedUrl = 'https://www.youtube.com/embed/LS6gjgvHzJQ?autoplay=1';
-                        title = 'Metronome 170 BPM';
-                        break;
-                    case '180':
-                        embedUrl = 'https://www.youtube.com/embed/Nti9agHQcxA?autoplay=1';
-                        title = 'Metronome 180 BPM';
-                        break;
-                    case '190':
-                        embedUrl = 'https://www.youtube.com/embed/_haeYj_VQ2k?autoplay=1';
-                        title = 'Metronome 190 BPM';
-                        break;
-                    case '200':
-                        embedUrl = 'https://www.youtube.com/embed/xzG7pWXOB3U?autoplay=1';
-                        title = 'Metronome 200 BPM';
-                        break;
-                    default:
-                        embedUrl = '';
-                        title = '';             
-                }
-                
-                if (embedUrl) {
-                    this.metronomeIframe.src = embedUrl;
-                    this.metronomeTitle.textContent = title;
-                    this.metronomePlayer.style.display = 'block';
-                    document.getElementById('metronomeSelect').value = '';
-                }
-            }
-            
-            closeMetronome() {
-                this.metronomePlayer.style.display = 'none';
-                this.metronomeIframe.src = '';
-            }
-            
             selectYouTubeVideo(bpm) {
                 let embedUrl = '';
                 
@@ -1908,12 +1494,11 @@ Best regards`);
                 const dayNum = this.getDayNumber(today);
                 const csvKey = `csv-${weekNum}_${dayNum}.csv`;
                 
-                const categoryTotals = {};
-                
-                // Get data from CSV storage
                 const csvData = localStorage.getItem(csvKey);
-                if (csvData) {
+                if (!csvData) return {};
+                
                 const lines = csvData.split('\n');
+                const categoryTotals = {};
                 
                 // Skip header row, process data rows
                 for (let i = 1; i < lines.length; i++) {
@@ -1945,22 +1530,6 @@ Best regards`);
                         categoryTotals[category] += duration;
                     }
                 }
-                }
-                
-                // Also include sessions from main history that might not be in CSV yet
-                const history = this.getHistory();
-                const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
-                const todayEnd = todayStart + 24 * 60 * 60 * 1000;
-                
-                history.forEach(session => {
-                    if (session.startTime >= todayStart && session.startTime < todayEnd) {
-                        const category = session.category;
-                        if (!categoryTotals[category]) {
-                            categoryTotals[category] = 0;
-                        }
-                        categoryTotals[category] += session.duration;
-                    }
-                });
                 
                 return categoryTotals;
             }
@@ -1988,311 +1557,11 @@ Best regards`);
             
             showDetailModal() {
                 this.sessionDetails.value = '';
-                document.getElementById('emailAddress').value = '';
                 this.detailModal.style.display = 'block';
             }
             
             closeDetailModal() {
                 this.detailModal.style.display = 'none';
-            }
-            
-            showManualEntryModal() {
-                // Clear form
-                document.getElementById('manualCategorySelect').value = '';
-                document.getElementById('manualSubcategorySelect').value = '';
-                document.getElementById('manualSubcategorySelect').style.display = 'none';
-                document.getElementById('manualDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('manualStartTime').value = '';
-                document.getElementById('manualEndTime').value = '';
-                document.getElementById('manualEmailAddress').value = '';
-                document.getElementById('manualSessionDetails').value = '';
-                
-                // Populate categories
-                this.populateManualCategorySelect();
-                
-                document.getElementById('manualEntryModal').style.display = 'block';
-            }
-            
-            closeManualEntryModal() {
-                document.getElementById('manualEntryModal').style.display = 'none';
-            }
-            
-            populateManualCategorySelect() {
-                const select = document.getElementById('manualCategorySelect');
-                select.innerHTML = '<option value="">Select category...</option>';
-                
-                this.config.categories.forEach(category => {
-                    const option = document.createElement('option');
-                    option.value = category.name;
-                    option.textContent = `${category.icon} ${category.name}`;
-                    select.appendChild(option);
-                });
-                
-                // Add event listener for subcategory handling
-                select.onchange = () => this.handleManualCategoryChange();
-            }
-            
-            handleManualCategoryChange() {
-                const categoryName = document.getElementById('manualCategorySelect').value;
-                const subcategorySelect = document.getElementById('manualSubcategorySelect');
-                
-                if (!categoryName) {
-                    subcategorySelect.style.display = 'none';
-                    return;
-                }
-                
-                const category = this.config.categories.find(c => c.name === categoryName);
-                if (category && category.subcategories && category.subcategories.length > 0) {
-                    subcategorySelect.innerHTML = '<option value="">Select subcategory...</option>';
-                    category.subcategories.forEach(sub => {
-                        const option = document.createElement('option');
-                        option.value = sub;
-                        option.textContent = sub;
-                        subcategorySelect.appendChild(option);
-                    });
-                    subcategorySelect.style.display = 'block';
-                } else {
-                    subcategorySelect.style.display = 'none';
-                }
-            }
-            
-            saveManualEntry() {
-                const categoryName = document.getElementById('manualCategorySelect').value;
-                const subcategoryName = document.getElementById('manualSubcategorySelect').value;
-                const date = document.getElementById('manualDate').value;
-                const startTime = document.getElementById('manualStartTime').value;
-                const endTime = document.getElementById('manualEndTime').value;
-                const emailAddress = document.getElementById('manualEmailAddress').value;
-                const details = document.getElementById('manualSessionDetails').value;
-                
-                if (!categoryName || !date || !startTime || !endTime) {
-                    alert('Please fill in all required fields (category, date, start time, end time)');
-                    return;
-                }
-                
-                // Create start and end timestamps
-                const startDateTime = new Date(`${date}T${startTime}`);
-                const endDateTime = new Date(`${date}T${endTime}`);
-                
-                if (endDateTime <= startDateTime) {
-                    alert('End time must be after start time');
-                    return;
-                }
-                
-                // Create session object
-                const session = {
-                    id: Date.now(),
-                    category: categoryName,
-                    subcategory: subcategoryName || null,
-                    startTime: startDateTime.getTime(),
-                    endTime: endDateTime.getTime(),
-                    duration: endDateTime.getTime() - startDateTime.getTime()
-                };
-                
-                // Save session to main history
-                const history = this.getHistory();
-                history.unshift(session);
-                localStorage.setItem('mytime-history', JSON.stringify(history));
-                
-                // Export to CSV and email
-                this.exportSessionToCSV(session, details);
-                if (emailAddress || details) {
-                    EmailCalendarHelper.createEmailWithCSV(session, details, emailAddress);
-                }
-                
-                // Update progress display
-                this.updateProgress();
-                
-                this.closeManualEntryModal();
-                
-                alert(`Manual entry saved: ${this.formatDuration(session.duration)} for ${categoryName}${subcategoryName ? ' - ' + subcategoryName : ''}`);
-            }
-            
-            showImportModal() {
-                document.getElementById('csvFileInput').value = '';
-                document.getElementById('importMode').value = 'merge';
-                document.getElementById('csvImportModal').style.display = 'block';
-            }
-            
-            closeImportModal() {
-                document.getElementById('csvImportModal').style.display = 'none';
-            }
-            
-            exportAllData() {
-                const history = this.getHistory();
-                if (history.length === 0) {
-                    alert('No data to export');
-                    return;
-                }
-                
-                // Generate comprehensive CSV with all sessions
-                const csvHeader = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private';
-                const csvRows = history.map(session => {
-                    const startDate = new Date(session.startTime);
-                    const endDate = new Date(session.endTime);
-                    const subject = session.subcategory ? `${session.category} - ${session.subcategory}` : session.category;
-                    
-                    return [
-                        `"${subject}"`,
-                        startDate.toLocaleDateString(),
-                        startDate.toLocaleTimeString(),
-                        endDate.toLocaleDateString(),
-                        endDate.toLocaleTimeString(),
-                        'False',
-                        '"Time tracking session from MyTime app"',
-                        '""',
-                        'False'
-                    ].join(',');
-                });
-                
-                const csvContent = csvHeader + '\n' + csvRows.join('\n');
-                const filename = `mytime_export_${new Date().toISOString().split('T')[0]}.csv`;
-                
-                // Download CSV file
-                const blob = new Blob([csvContent], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = filename;
-                a.click();
-                window.URL.revokeObjectURL(url);
-                
-                alert(`Exported ${history.length} sessions to ${filename}`);
-            }
-            
-            importCSV() {
-                const fileInput = document.getElementById('csvFileInput');
-                const importMode = document.getElementById('importMode').value;
-                
-                if (!fileInput.files || fileInput.files.length === 0) {
-                    alert('Please select a CSV file');
-                    return;
-                }
-                
-                const file = fileInput.files[0];
-                const reader = new FileReader();
-                
-                reader.onload = (e) => {
-                    try {
-                        const csvContent = e.target.result;
-                        const lines = csvContent.split('\n');
-                        
-                        if (lines.length < 2) {
-                            alert('Invalid CSV file format');
-                            return;
-                        }
-                        
-                        const sessions = [];
-                        
-                        // Parse CSV rows (skip header)
-                        for (let i = 1; i < lines.length; i++) {
-                            const line = lines[i].trim();
-                            if (!line) continue;
-                            
-                            const columns = this.parseCSVRow(line);
-                            if (columns.length < 5) continue;
-                            
-                            const subject = columns[0].replace(/"/g, '');
-                            const startDate = columns[1];
-                            const startTime = columns[2];
-                            const endDate = columns[3];
-                            const endTime = columns[4];
-                            
-                            // Parse dates
-                            const startDateTime = new Date(startDate + ' ' + startTime);
-                            const endDateTime = new Date(endDate + ' ' + endTime);
-                            
-                            if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
-                                continue; // Skip invalid dates
-                            }
-                            
-                            // Extract category and subcategory
-                            const parts = subject.split(' - ');
-                            const category = parts[0];
-                            const subcategory = parts.length > 1 ? parts[1] : null;
-                            
-                            sessions.push({
-                                id: startDateTime.getTime(),
-                                category: category,
-                                subcategory: subcategory,
-                                startTime: startDateTime.getTime(),
-                                endTime: endDateTime.getTime(),
-                                duration: endDateTime.getTime() - startDateTime.getTime(),
-                                date: startDateTime.toDateString()
-                            });
-                        }
-                        
-                        if (sessions.length === 0) {
-                            alert('No valid sessions found in CSV file');
-                            return;
-                        }
-                        
-                        // Handle import mode
-                        let history = [];
-                        if (importMode === 'merge') {
-                            history = this.getHistory();
-                            // Remove duplicates by ID
-                            const existingIds = new Set(history.map(s => s.id));
-                            const newSessions = sessions.filter(s => !existingIds.has(s.id));
-                            history = [...newSessions, ...history];
-                        } else {
-                            history = sessions;
-                        }
-                        
-                        // Save to localStorage
-                        localStorage.setItem('mytime-history', JSON.stringify(history));
-                        
-                        // Rebuild CSV storage for progress tracking
-                        this.rebuildCSVStorage(history);
-                        
-                        // Update displays
-                        this.updateProgress();
-                        
-                        this.closeImportModal();
-                        alert(`Imported ${sessions.length} sessions (${importMode} mode)`);
-                        
-                    } catch (error) {
-                        console.error('Import error:', error);
-                        alert('Error importing CSV file. Please check the format.');
-                    }
-                };
-                
-                reader.readAsText(file);
-            }
-            
-            rebuildCSVStorage(history) {
-                // Clear existing CSV storage
-                const keys = Object.keys(localStorage).filter(key => key.startsWith('csv-'));
-                keys.forEach(key => localStorage.removeItem(key));
-                
-                // Rebuild CSV files by date
-                history.forEach(session => {
-                    const sessionDate = new Date(session.startTime);
-                    const weekNum = this.getWeekNumber(sessionDate);
-                    const dayNum = this.getDayNumber(sessionDate);
-                    const csvKey = `csv-${weekNum}_${dayNum}.csv`;
-                    
-                    const startDate = new Date(session.startTime);
-                    const endDate = new Date(session.endTime);
-                    const subject = session.subcategory ? `${session.category} - ${session.subcategory}` : session.category;
-                    
-                    const csvRow = [
-                        `"${subject}"`,
-                        startDate.toLocaleDateString(),
-                        startDate.toLocaleTimeString(),
-                        endDate.toLocaleDateString(),
-                        endDate.toLocaleTimeString(),
-                        'False',
-                        '"Time tracking session from MyTime app"',
-                        '""',
-                        'False'
-                    ].join(',');
-                    
-                    // Get existing CSV or create new
-                    const existingCSV = localStorage.getItem(csvKey) || 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private';
-                    const updatedCSV = existingCSV + '\n' + csvRow;
-                    localStorage.setItem(csvKey, updatedCSV);
-                });
             }
             
             skipDetails() {
@@ -2306,14 +1575,13 @@ Best regards`);
             saveWithDetails() {
                 const session = this.createSessionObject();
                 const details = this.sessionDetails.value;
-                const emailAddress = document.getElementById('emailAddress').value;
                 
                 // Save locally first
                 this.saveSession();
                 this.exportSessionToCSV(session, details);
                 
                 // Create email with CSV for Google Calendar import
-                EmailCalendarHelper.createEmailWithCSV(session, details, emailAddress);
+                EmailCalendarHelper.createEmailWithCSV(session, details);
                 
                 this.closeDetailModal();
                 this.resetTimerOnly();
