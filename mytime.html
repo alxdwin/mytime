@@ -598,45 +598,38 @@
         
         <!-- Google Calendar Tab Content -->
         <div id="calendarTab" class="tab-content">
-            <div class="progress-card">
+            <div class="progress-card" style="margin-bottom: 10px;">
                 <div class="progress-header">
-                    <span class="progress-title">📅 Google Calendar Integration</span>
+                    <span class="progress-title">📅 Google Calendar View</span>
+                    <button class="export-btn" onclick="window.app.openCalendarSettings()">⚙️ Calendar Settings</button>
                 </div>
-                <div style="padding: 20px; text-align: center; color: white;">
-                    <h3 style="margin-bottom: 20px; color: #f1c40f;">Calendar Features</h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
-                            <h4 style="color: #f1c40f; margin-bottom: 10px;">📧 Email Export</h4>
-                            <p style="font-size: 0.9rem; line-height: 1.4;">Automatically creates email with CSV attachment for easy Google Calendar import</p>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
-                            <h4 style="color: #f1c40f; margin-bottom: 10px;">📊 Weekly Reports</h4>
-                            <p style="font-size: 0.9rem; line-height: 1.4;">View comprehensive time tracking reports and export data</p>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
-                            <h4 style="color: #f1c40f; margin-bottom: 10px;">🔄 Auto Sync</h4>
-                            <p style="font-size: 0.9rem; line-height: 1.4;">Future: Direct API integration with Google Calendar (coming soon)</p>
-                        </div>
+            </div>
+            
+            <!-- Google Calendar Embed -->
+            <div class="progress-card" style="padding: 0; overflow: hidden; height: 600px;">
+                <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&showCalendars=0&showTabs=0&showPrint=0&showDate=1&mode=WEEK&height=600&wkst=2&bgcolor=%23667eea&ctz=Europe%2FVienna" 
+                        style="border: 0; width: 100%; height: 100%; border-radius: 20px;" 
+                        width="800" 
+                        height="600" 
+                        frameborder="0" 
+                        scrolling="no">
+                </iframe>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="progress-card" style="margin-top: 10px;">
+                <div style="padding: 10px; text-align: center;">
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="window.open('https://calendar.google.com', '_blank')" style="background: #f1c40f; color: #2c3e50;">
+                            🔗 Open Full Calendar
+                        </button>
+                        <button class="btn btn-primary" onclick="window.open('https://calendar.google.com/calendar/u/0/r/settings/export', '_blank')" style="background: #27ae60; color: white;">
+                            📥 Import CSV
+                        </button>
+                        <button class="btn btn-primary" onclick="window.app.showWeeklyReport()">
+                            📊 Weekly Report
+                        </button>
                     </div>
-                    
-                    <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
-                        <h4 style="color: #f1c40f; margin-bottom: 15px;">📋 How to Import to Google Calendar</h4>
-                        <ol style="text-align: left; font-size: 0.9rem; line-height: 1.6;">
-                            <li>Complete a timer session and click "📅 Save to Calendar"</li>
-                            <li>Download the CSV file that's automatically generated</li>
-                            <li>Open your email client and attach the CSV file</li>
-                            <li>Go to calendar.google.com</li>
-                            <li>Click Settings (gear icon) → Import & export</li>
-                            <li>Choose the CSV file and import to your calendar</li>
-                        </ol>
-                    </div>
-                    
-                    <button class="btn btn-primary" onclick="window.app.showTab('mytime')" style="background: #f1c40f; color: #2c3e50;">
-                        ← Back to Timer
-                    </button>
                 </div>
             </div>
         </div>
@@ -1618,6 +1611,10 @@ Best regards`);
                     document.getElementById('calendarTab').classList.add('active');
                     document.querySelector('.tab-btn:last-child').classList.add('active');
                 }
+            }
+            
+            openCalendarSettings() {
+                window.open('https://calendar.google.com/calendar/u/0/r/settings', '_blank');
             }
         }
 
