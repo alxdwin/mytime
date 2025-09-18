@@ -172,7 +172,7 @@
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .header h1 {
@@ -184,6 +184,49 @@
         .header p {
             opacity: 0.9;
             font-size: 1.1rem;
+        }
+
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            flex: 1;
+            max-width: 200px;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .tab-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: #f1c40f;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .timer-card {
@@ -610,11 +653,18 @@
             <p>Professional Time Tracking</p>
         </header>
         
-        <div class="current-session" id="currentSession">
-            <div class="session-info">No active session</div>
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="window.app.showTab('mytime')">⏱️ MyTime</button>
+            <button class="tab-btn" onclick="window.app.showTab('calendar')">📅 Google Calendar</button>
         </div>
         
-        <div class="main-content">
+        <!-- MyTime Tab Content -->
+        <div id="mytimeTab" class="tab-content active">
+            <div class="current-session" id="currentSession">
+                <div class="session-info">No active session</div>
+            </div>
+            
+            <div class="main-content">
             <div class="timer-section">
                 <div class="timer-card">
                     <div class="timer-display" id="timer">00:00:00</div>
