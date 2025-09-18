@@ -707,14 +707,60 @@
                     </div>
                 </div>
             </div>
+            </div>
+            
+            <div class="progress-card">
+                <div class="progress-header">
+                    <span class="progress-title">Today's Progress</span>
+                    <button class="export-btn" onclick="window.app.showWeeklyReport()">Weekly Report</button>
+                </div>
+                <div id="progressList"></div>
+            </div>
         </div>
         
-        <div class="progress-card">
-            <div class="progress-header">
-                <span class="progress-title">Today's Progress</span>
-                <button class="export-btn" onclick="window.app.showWeeklyReport()">Weekly Report</button>
+        <!-- Google Calendar Tab Content -->
+        <div id="calendarTab" class="tab-content">
+            <div class="progress-card">
+                <div class="progress-header">
+                    <span class="progress-title">📅 Google Calendar Integration</span>
+                </div>
+                <div style="padding: 20px; text-align: center; color: white;">
+                    <h3 style="margin-bottom: 20px; color: #f1c40f;">Calendar Features</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #f1c40f; margin-bottom: 10px;">📧 Email Export</h4>
+                            <p style="font-size: 0.9rem; line-height: 1.4;">Automatically creates email with CSV attachment for easy Google Calendar import</p>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #f1c40f; margin-bottom: 10px;">📊 Weekly Reports</h4>
+                            <p style="font-size: 0.9rem; line-height: 1.4;">View comprehensive time tracking reports and export data</p>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #f1c40f; margin-bottom: 10px;">🔄 Auto Sync</h4>
+                            <p style="font-size: 0.9rem; line-height: 1.4;">Future: Direct API integration with Google Calendar (coming soon)</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                        <h4 style="color: #f1c40f; margin-bottom: 15px;">📋 How to Import to Google Calendar</h4>
+                        <ol style="text-align: left; font-size: 0.9rem; line-height: 1.6;">
+                            <li>Complete a timer session and click "📅 Save to Calendar"</li>
+                            <li>Download the CSV file that's automatically generated</li>
+                            <li>Open your email client and attach the CSV file</li>
+                            <li>Go to calendar.google.com</li>
+                            <li>Click Settings (gear icon) → Import & export</li>
+                            <li>Choose the CSV file and import to your calendar</li>
+                        </ol>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="window.app.showTab('mytime')" style="background: #f1c40f; color: #2c3e50;">
+                        ← Back to Timer
+                    </button>
+                </div>
             </div>
-            <div id="progressList"></div>
         </div>
     </div>
 
@@ -1869,6 +1915,27 @@ Best regards`);
                     endTime: Date.now(),
                     date: new Date().toDateString()
                 };
+            }
+            
+            showTab(tabName) {
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Remove active class from all tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Show selected tab
+                if (tabName === 'mytime') {
+                    document.getElementById('mytimeTab').classList.add('active');
+                    document.querySelector('.tab-btn:first-child').classList.add('active');
+                } else if (tabName === 'calendar') {
+                    document.getElementById('calendarTab').classList.add('active');
+                    document.querySelector('.tab-btn:last-child').classList.add('active');
+                }
             }
         }
 
