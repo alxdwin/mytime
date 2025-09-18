@@ -58,7 +58,7 @@
 
         .tab-btn {
             flex: 1;
-            max-width: 200px;
+            max-width: 150px;
             padding: 12px 20px;
             border: none;
             background: transparent;
@@ -87,6 +87,85 @@
 
         .tab-content.active {
             display: block;
+        }
+
+        .score-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            height: 600px;
+        }
+
+        .score-nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .score-nav h3 {
+            color: #f1c40f;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: #f1c40f;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .score-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .score-content h3 {
+            color: #f1c40f;
+            margin-bottom: 20px;
+        }
+
+        .score-content iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+        }
+
+        @media (max-width: 1000px) {
+            .score-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .score-nav {
+                height: auto;
+            }
+            
+            .score-content {
+                min-height: 400px;
+            }
         }
 
         .main-content {
@@ -533,7 +612,8 @@
         
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="window.app.showTab('mytime')">⏱️ MyTime</button>
-            <button class="tab-btn" onclick="window.app.showTab('calendar')">📅 Google Calendar</button>
+            <button class="tab-btn" onclick="window.app.showTab('calendar')">📅 Calendar</button>
+            <button class="tab-btn" onclick="window.app.showTab('score')">🎯 Score</button>
         </div>
         
         <!-- MyTime Tab Content -->
@@ -629,6 +709,64 @@
                         <button class="btn btn-primary" onclick="window.app.showWeeklyReport()">
                             📊 Weekly Report
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Score Tab Content -->
+        <div id="scoreTab" class="tab-content">
+            <div class="score-layout">
+                <!-- Left Navigation -->
+                <div class="score-nav">
+                    <h3>📚 Resources</h3>
+                    <a href="#" class="nav-link active" onclick="window.app.showScoreContent('overview')">📊 Overview</a>
+                    <a href="#" class="nav-link" onclick="window.app.showScoreContent('analytics')">📈 Analytics</a>
+                    <a href="#" class="nav-link" onclick="window.app.showScoreContent('goals')">🎯 Goals</a>
+                    <a href="#" class="nav-link" onclick="window.app.showScoreContent('achievements')">🏆 Achievements</a>
+                    <a href="#" class="nav-link" onclick="window.app.showScoreContent('export')">📄 Export Reports</a>
+                    
+                    <h3 style="margin-top: 30px;">🎼 Sheet Music</h3>
+                    <a href="https://acrobat.adobe.com/id/urn:aaid:sc:EU:15c10f06-7f9d-4028-8984-78084e0d8bbe" target="_blank" class="nav-link">🎻 Ysaye Sonata.6</a>
+                    
+                    <h3 style="margin-top: 30px;">🔗 External Links</h3>
+                    <a href="https://docs.google.com" target="_blank" class="nav-link">📝 Google Docs</a>
+                    <a href="https://drive.google.com" target="_blank" class="nav-link">💾 Google Drive</a>
+                    <a href="https://sheets.google.com" target="_blank" class="nav-link">📊 Google Sheets</a>
+                </div>
+                
+                <!-- Right Content Area -->
+                <div class="score-content">
+                    <div id="scoreContent">
+                        <h3>📊 Performance Overview</h3>
+                        <div style="color: white; line-height: 1.6;">
+                            <p style="margin-bottom: 20px;">Track your productivity and achievements over time.</p>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                    <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">🕒</h4>
+                                    <p style="font-size: 0.9rem;">Total Time Tracked</p>
+                                    <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0h 0m</p>
+                                </div>
+                                
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                    <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">📅</h4>
+                                    <p style="font-size: 0.9rem;">Sessions Completed</p>
+                                    <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0</p>
+                                </div>
+                                
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                    <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">🎯</h4>
+                                    <p style="font-size: 0.9rem;">Goals Achieved</p>
+                                    <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0%</p>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                <h4 style="color: #f1c40f; margin-bottom: 15px;">📈 Recent Activity</h4>
+                                <p style="color: rgba(255,255,255,0.8);">Start tracking time to see your activity here.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1606,15 +1744,119 @@ Best regards`);
                 // Show selected tab
                 if (tabName === 'mytime') {
                     document.getElementById('mytimeTab').classList.add('active');
-                    document.querySelector('.tab-btn:first-child').classList.add('active');
+                    document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 } else if (tabName === 'calendar') {
                     document.getElementById('calendarTab').classList.add('active');
-                    document.querySelector('.tab-btn:last-child').classList.add('active');
+                    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                } else if (tabName === 'score') {
+                    document.getElementById('scoreTab').classList.add('active');
+                    document.querySelectorAll('.tab-btn')[2].classList.add('active');
                 }
             }
             
             openCalendarSettings() {
                 window.open('https://calendar.google.com/calendar/u/0/r/settings', '_blank');
+            }
+            
+            showScoreContent(contentType) {
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                event.target.classList.add('active');
+                
+                const scoreContent = document.getElementById('scoreContent');
+                
+                switch(contentType) {
+                    case 'overview':
+                        scoreContent.innerHTML = `
+                            <h3>📊 Performance Overview</h3>
+                            <div style="color: white; line-height: 1.6;">
+                                <p style="margin-bottom: 20px;">Track your productivity and achievements over time.</p>
+                                
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                        <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">🕒</h4>
+                                        <p style="font-size: 0.9rem;">Total Time Tracked</p>
+                                        <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0h 0m</p>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                        <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">📅</h4>
+                                        <p style="font-size: 0.9rem;">Sessions Completed</p>
+                                        <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0</p>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center;">
+                                        <h4 style="color: #f1c40f; font-size: 2rem; margin-bottom: 10px;">🎯</h4>
+                                        <p style="font-size: 0.9rem;">Goals Achieved</p>
+                                        <p style="font-size: 1.2rem; font-weight: 600; color: #f1c40f;">0%</p>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                    <h4 style="color: #f1c40f; margin-bottom: 15px;">📈 Recent Activity</h4>
+                                    <p style="color: rgba(255,255,255,0.8);">Start tracking time to see your activity here.</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'analytics':
+                        scoreContent.innerHTML = `
+                            <h3>📈 Analytics Dashboard</h3>
+                            <div style="color: white;">
+                                <p style="margin-bottom: 20px;">Detailed analytics and insights about your time tracking patterns.</p>
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                    <h4 style="color: #f1c40f;">📊 Coming Soon</h4>
+                                    <p>Advanced analytics features will be available here.</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'goals':
+                        scoreContent.innerHTML = `
+                            <h3>🎯 Goals & Targets</h3>
+                            <div style="color: white;">
+                                <p style="margin-bottom: 20px;">Set and track your productivity goals.</p>
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                    <h4 style="color: #f1c40f;">🎯 Goal Setting</h4>
+                                    <p>Goal management features will be available here.</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'achievements':
+                        scoreContent.innerHTML = `
+                            <h3>🏆 Achievements</h3>
+                            <div style="color: white;">
+                                <p style="margin-bottom: 20px;">Your productivity milestones and achievements.</p>
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                    <h4 style="color: #f1c40f;">🏆 Achievement System</h4>
+                                    <p>Achievement tracking features will be available here.</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'export':
+                        scoreContent.innerHTML = `
+                            <h3>📄 Export Reports</h3>
+                            <div style="color: white;">
+                                <p style="margin-bottom: 20px;">Export your data in various formats.</p>
+                                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                                    <h4 style="color: #f1c40f;">📄 Export Options</h4>
+                                    <p>PDF and Excel export features will be available here.</p>
+                                    <button class="btn btn-primary" onclick="window.app.showWeeklyReport()" style="margin-top: 15px;">📊 View Weekly Report</button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
             }
         }
 
