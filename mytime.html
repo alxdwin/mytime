@@ -612,6 +612,7 @@
         
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="window.app.showTab('mytime')">⏱️ MyTime</button>
+            <button class="tab-btn" onclick="window.app.showTab('tuner')">🎵 Tuner</button>
             <button class="tab-btn" onclick="window.app.showTab('calendar')">📅 Calendar</button>
             <button class="tab-btn" onclick="window.app.showTab('score')">🎯 Score</button>
             <button class="tab-btn" onclick="window.app.showTab('record')">🎙️ Record</button>
@@ -675,6 +676,40 @@
                     <button class="export-btn" onclick="window.app.showWeeklyReport()">Weekly Report</button>
                 </div>
                 <div id="progressList"></div>
+            </div>
+        </div>
+        
+        <!-- Tuner Tab Content -->
+        <div id="tunerTab" class="tab-content">
+            <div style="width: 100%; padding: 3rem;">
+                <!-- Frequency Display -->
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <div id="noteDisplay" style="font-size: 6rem; font-weight: bold; color: #f1c40f; margin-bottom: 1rem;">A4</div>
+                    <div id="frequencyDisplay" style="font-size: 2.5rem; color: rgba(255,255,255,0.8);">443.0 Hz</div>
+                </div>
+                
+                <!-- Fine Tuning Slider -->
+                <div style="margin-bottom: 4rem;">
+                    <label for="tuningSlider" style="color: white; margin-bottom: 2rem; display: block; font-size: 1.5rem; font-weight: bold; text-align: center;">🔧 A4 Fine Tuning</label>
+                    <input type="range" id="tuningSlider" min="440" max="444" step="1" value="443" 
+                           style="width: 100%; height: 12px; margin-bottom: 2rem;" 
+                           oninput="window.app.updateFineTuning(this.value)">
+                    <div style="display: flex; justify-content: space-between; color: rgba(255,255,255,0.8); font-size: 1.1rem; font-weight: bold;">
+                        <span>440 Hz</span>
+                        <span>441 Hz</span>
+                        <span>442 Hz</span>
+                        <span>443 Hz</span>
+                        <span>444 Hz</span>
+                    </div>
+                </div>
+                
+                <!-- Play/Stop Control -->
+                <div style="text-align: center;">
+                    <button id="tunerPlayBtn" class="btn btn-start" onclick="window.app.toggleTunerTone()" 
+                            style="font-size: 1.8rem; padding: 1.5rem 3rem; min-width: 250px;">
+                        ⏸️ Stop Tone
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -1063,6 +1098,17 @@ Best regards`);
                 };
                 this.selectedCategory = null;
                 
+                // Audio context for tuner
+                this.audioContext = null;
+                
+                // Tuner properties (A4 only)
+                this.tuner = {
+                    fineTuning: 443,
+                    oscillator: null,
+                    gainNode: null,
+                    isPlaying: false
+                };
+                
                 console.log('Initializing elements...');
                 this.initElements();
                 console.log('Loading config...');
@@ -1074,6 +1120,7 @@ Best regards`);
                 console.log('Updating display...');
                 this.updateDisplay();
                 this.updateProgress();
+                this.initTuner();
                 console.log('MyTimeApp constructor complete');
             }
             
@@ -1845,12 +1892,96 @@ Best regards`);
                 });
                 
                 // Show selected tab
-                const tabs = ['mytime', 'calendar', 'score', 'record', 'share'];
+                const tabs = ['mytime', 'tuner', 'calendar', 'score', 'record', 'share'];
                 const tabIndex = tabs.indexOf(tabName);
                 
                 if (tabIndex !== -1) {
                     document.getElementById(tabName + 'Tab').classList.add('active');
                     document.querySelectorAll('.tab-btn')[tabIndex].classList.add('active');
+                }
+            }
+
+            initTuner() {
+                // Initialize tuner display and auto-play A4
+                this.updateTunerDisplay();
+                // Auto-start playing tone
+                this.playTone();
+            }
+
+            // Tuner functionality (A4 only)
+            updateFineTuning(frequency) {
+                this.tuner.fineTuning = parseFloat(frequency);
+                this.updateTunerDisplay();
+                this.playToneIfActive();
+            }
+
+            updateTunerDisplay() {
+                const freqDisplay = document.getElementById('frequencyDisplay');
+                freqDisplay.textContent = this.tuner.fineTuning.toFixed(1) + ' Hz';
+            }
+
+            playToneIfActive() {
+                if (this.tuner.isPlaying) {
+                    this.stopTone();
+                    this.playTone();
+                }
+            }
+
+            playTone() {
+                if (!this.audioContext) {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                if (this.tuner.oscillator) {
+                    this.stopTone();
+                }
+                
+                this.tuner.oscillator = this.audioContext.createOscillator();
+                this.tuner.gainNode = this.audioContext.createGain();
+                
+                this.tuner.oscillator.connect(this.tuner.gainNode);
+                this.tuner.gainNode.connect(this.audioContext.destination);
+                
+                this.tuner.oscillator.frequency.value = this.tuner.fineTuning;
+                this.tuner.oscillator.type = 'sine';
+                
+                this.tuner.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+                this.tuner.gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.1);
+                
+                this.tuner.oscillator.start();
+                this.tuner.isPlaying = true;
+                this.updateTunerButton();
+            }
+
+            stopTone() {
+                if (this.tuner.oscillator) {
+                    this.tuner.gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.1);
+                    this.tuner.oscillator.stop(this.audioContext.currentTime + 0.1);
+                    this.tuner.oscillator = null;
+                    this.tuner.gainNode = null;
+                }
+                
+                this.tuner.isPlaying = false;
+                this.updateTunerButton();
+            }
+
+            toggleTunerTone() {
+                if (this.tuner.isPlaying) {
+                    this.stopTone();
+                } else {
+                    this.playTone();
+                }
+                this.updateTunerButton();
+            }
+
+            updateTunerButton() {
+                const playBtn = document.getElementById('tunerPlayBtn');
+                if (this.tuner.isPlaying) {
+                    playBtn.textContent = '⏸️ Stop Tone';
+                    playBtn.className = 'btn btn-stop';
+                } else {
+                    playBtn.textContent = '▶️ Play Tone';
+                    playBtn.className = 'btn btn-start';
                 }
             }
             
