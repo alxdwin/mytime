@@ -2,6 +2,14 @@
 
 A sophisticated time tracking Progressive Web App with hierarchical categories, CSV export, and offline support.
 
+## 🌐 Online Access
+
+**Access MyTime from any device:**
+- 📍 **URL**: https://alxdwin.github.io/mytime/mytime.html
+- ✅ No installation required
+- 🌍 Works on desktop, tablet, and mobile
+- 🔒 All data stored locally in your browser
+
 ## ✨ Features
 
 - **Hierarchical Categories**: Main categories with subcategories for detailed tracking
@@ -16,7 +24,7 @@ A sophisticated time tracking Progressive Web App with hierarchical categories, 
 
 ## 🚀 Quick Start
 
-1. Open `mytime.html` in your web browser
+1. Open https://alxdwin.github.io/mytime/mytime.html in your web browser
 2. Click "Start" to begin a new session
 3. Select a category and subcategory
 4. Track your time with pause/resume capability
@@ -58,6 +66,8 @@ All data is stored locally in browser localStorage:
 - `mytime-categories` - Category definitions
 - `mytime-csv-data` - Weekly CSV data
 - `mytime-settings` - App settings
+
+**Note**: Each browser/device maintains its own data. Data is not synchronized across different devices or browsers.
 
 ## 📊 CSV Export
 
